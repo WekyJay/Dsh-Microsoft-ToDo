@@ -1,12 +1,21 @@
 # Dsh-Microsoft-ToDo
 
-Microsoft To Do 面板插件，为 DeepSeek Harness 的 Web 界面加一个「微软待办」面板：左侧清单（支持本地分组），右侧任务（新增 / 完成 / 重开 / 标星 / 删除），顶部今日统计，外加「我的一天」速选清单。
+Microsoft To Do 面板插件，为 DeepSeek Harness 的 Web 界面加一个「微软待办」面板：左侧一列放品牌、今日/逾期/重要统计与清单导航（支持本地分组），右侧是任务区（新增 / 完成 / 重开 / 标星 / 删除），任务详情与分组设置都从右侧抽屉打开。
 
-A Microsoft To Do panel for DeepSeek Harness: lists on the left (with local groups), tasks on the right (add / complete / reopen / star / delete), today's counters on top, and a My Day short list.
+A Microsoft To Do panel for DeepSeek Harness: a left rail with the brand, today/overdue/starred counters and list navigation (local groups included), and a task area on the right (add / complete / reopen / star / delete). Task details and group settings slide in from the right.
+
+---
+
+## 预览 / Preview
+
+| 面板 / Board | 任务详情 / Task details |
+| --- | --- |
+| ![工作四象限与清单导航，右侧任务列表](docs/preview-board.jpg) | ![任务详情抽屉：备注、截止日期、提醒、重复、下一步、附件](docs/preview-detail.jpg) |
 
 ---
 
 ## 功能 / Features
+
 
 | 中文 | English |
 | --- | --- |

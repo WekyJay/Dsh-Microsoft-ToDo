@@ -64,6 +64,22 @@ plugin_manager: action=remove_bundle, target=dsh-microsoft-todo
 
 删除后 `groups.json` / `myday.json` 仍留在插件目录；令牌缓存需手动删除 `~/.config/microsoft-todo-mcp/`。
 
+## 发版 / Releasing
+
+市场索引按 commit 固定版本，所以顺序是「先提交插件改动，再生成索引」：
+
+```bash
+# 1. 改 package.json 的 version，提交并推送
+git add -A && git commit -m "feat: ..." && git push
+
+# 2. 用新 commit 重新生成索引（会自动复制 icon.svg 到 market/）
+node scripts/make-index.mjs
+git add market && git commit -m "build: publish market index" && git push
+```
+
+GitHub Pages 会把 `market/index.json` 发布到
+`https://wekyjay.github.io/Dsh-Microsoft-ToDo/market/index.json`。
+
 ## License
 
 MIT

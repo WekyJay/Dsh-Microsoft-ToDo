@@ -4,6 +4,14 @@ Microsoft To Do 面板插件，为 DeepSeek Harness 的 Web 界面加一个「�
 
 A Microsoft To Do panel for DeepSeek Harness: a left rail with the brand, today/overdue/starred counters and list navigation (local groups included), and a task area on the right (add / complete / reopen / star / delete). Task details and group settings slide in from the right.
 
+<p align="center">
+  <a href="https://github.com/WekyJay/Dsh-Microsoft-ToDo/releases"><img alt="version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fwekyjay.github.io%2FDsh-Microsoft-ToDo%2Fpackage.json&query=%24.version&label=version&color=2564CF"></a>
+  <a href="#版本兼容--compatibility"><img alt="DSH" src="https://img.shields.io/badge/DSH-%E2%89%A50.2.0-2564CF"></a>
+  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-2EA043"></a>
+  <a href="https://github.com/WekyJay/Dsh-Microsoft-ToDo/stargazers"><img alt="stars" src="https://img.shields.io/github/stars/WekyJay/Dsh-Microsoft-ToDo?color=B0790F"></a>
+  <a href="https://wekyjay.github.io/Dsh-Microsoft-ToDo/market/index.json"><img alt="market index" src="https://img.shields.io/badge/market-index-1F2937"></a>
+</p>
+
 ---
 
 ## 预览 / Preview

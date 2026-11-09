@@ -60,16 +60,16 @@
         ]
       },
       "dist-tags": {
-        "latest": "0.4.0"
+        "latest": "0.5.0"
       },
       "versions": [
         {
-          "version": "0.4.0",
-          "publishTimestamp": 1794204563,
+          "version": "0.5.0",
+          "publishTimestamp": 1794204903,
           "source": {
             "type": "git",
             "url": "https://github.com/WekyJay/Dsh-Microsoft-ToDo",
-            "commit": "936950e4158877c99211cbcb665150c16da3073a"
+            "commit": "66b25ac426b41b3e312dbede2b749c1f7681d1c4"
           },
           "engines": {
             "dsh": ">=0.2.0"

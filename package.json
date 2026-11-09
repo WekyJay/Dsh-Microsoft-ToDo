@@ -34,7 +34,9 @@
     "dsh": ">=0.2.0"
   },
   "dsh": {
-    "bundle": { "patch": "./cordis.patch.yml" },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
     "client": {
       "platform": "web",
       "immediately": true,
@@ -45,5 +47,13 @@
         "@deepseek-ai/dsh-client-ui-sidebar"
       ]
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WekyJay/Dsh-Microsoft-ToDo.git"
+  },
+  "homepage": "https://github.com/WekyJay/Dsh-Microsoft-ToDo#readme",
+  "bugs": {
+    "url": "https://github.com/WekyJay/Dsh-Microsoft-ToDo/issues"
   }
 }

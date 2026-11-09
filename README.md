@@ -16,6 +16,7 @@ A Microsoft To Do panel for DeepSeek Harness: lists on the left (with local grou
 | 我的一天：每天挑一批任务先做，次日自动清空 | My Day: pick a few tasks for today, resets each day |
 | 任务详情：备注、截止日期、提醒、重复、下一步、附件 | Task details: notes, due date, reminder, recurrence, steps, attachments |
 | 设备码登录，令牌由上游 MCP 服务缓存 | Device-code sign-in; the token cache lives in the upstream MCP server |
+| shadcn/ui 风格界面：统计卡片、分段 Tabs、悬浮行操作、右侧详情 Sheet、骨架屏，适配明暗主题 | shadcn/ui inspired UI: stat cards, segmented tabs, hover row actions, detail sheet, skeletons, dark-mode aware |
 | 中英双语界面 | Chinese and English UI |
 
 ## 安装 / Install
@@ -36,7 +37,7 @@ A Microsoft To Do panel for DeepSeek Harness: lists on the left (with local grou
 
 | 项目 | 值 |
 | --- | --- |
-| 插件版本 | `0.4.0` |
+| 插件版本 | `0.5.0` |
 | 支持的 DSH | `>=0.2.0`（`package.json` 的 `engines.dsh`，DSH 在安装/启用时强制校验） |
 | 实测环境 | DSH `0.2.2-rc.1` · macOS（Apple Silicon）· Node 25 |
 

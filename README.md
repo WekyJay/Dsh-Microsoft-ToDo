@@ -29,7 +29,7 @@ A Microsoft To Do panel for DeepSeek Harness: lists on the left (with local grou
 
    已装过时先 `remove_bundle target=dsh-microsoft-todo`，DSH 不会热重载宿主模块。
 
-2. **从插件市场安装**：在 DSH 的设置 → 插件市场里添加本仓库的索引地址 `https://<owner>.github.io/Dsh-Microsoft-ToDo/market/index.json`，然后在 Discover 里搜索「微软待办」安装。
+2. **从插件市场安装**：在 DSH 的设置 → 插件市场里添加本仓库的索引地址 `https://wekyjay.github.io/Dsh-Microsoft-ToDo/market/index.json`，然后在 Discover 里搜索「微软待办」安装。
 
 ## 首次使用 / First run
 

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Microsoft To Do">
+  <rect width="64" height="64" rx="14" fill="#2564CF"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 20.5l3.2 3.2 6-6.4"/>
+    <path d="M34 20.5h14"/>
+    <path d="M16 33.5l3.2 3.2 6-6.4"/>
+    <path d="M34 33.5h14"/>
+    <path d="M16 46.5l3.2 3.2 6-6.4"/>
+    <path d="M34 46.5h14"/>
+  </g>
+</svg>

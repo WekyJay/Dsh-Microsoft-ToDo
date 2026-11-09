@@ -1,0 +1,81 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Microsoft To Do market",
+    "zh": "微软待办插件源"
+  },
+  "description": {
+    "en": "Index for the Dsh-Microsoft-ToDo bundle.",
+    "zh": "Dsh-Microsoft-ToDo 插件的自建市场索引。"
+  },
+  "metadata": {
+    "categories": {
+      "productivity": {
+        "title": {
+          "en": "Productivity",
+          "zh": "效率"
+        }
+      }
+    },
+    "labels": {
+      "community": {
+        "title": {
+          "en": "Community",
+          "zh": "社区"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-microsoft-todo",
+      "title": {
+        "en": "Microsoft To Do",
+        "zh": "微软待办"
+      },
+      "description": {
+        "en": "Microsoft To Do panel: lists, tasks, local groups, and My Day.",
+        "zh": "Microsoft To Do 面板：清单、任务、本机分组与「我的一天」。"
+      },
+      "icon": "icon.svg",
+      "author": "Weky Jay",
+      "homepage": "https://github.com/WekyJay/Dsh-Microsoft-ToDo",
+      "repository": {
+        "url": "https://github.com/WekyJay/Dsh-Microsoft-ToDo"
+      },
+      "metadata": {
+        "category": "productivity",
+        "labels": [
+          "community"
+        ],
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "dsh-bundle",
+          "microsoft-todo",
+          "microsoft-graph",
+          "todo",
+          "tasks",
+          "productivity"
+        ]
+      },
+      "dist-tags": {
+        "latest": "0.3.0"
+      },
+      "versions": [
+        {
+          "version": "0.3.0",
+          "publishTimestamp": 1794202013,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/WekyJay/Dsh-Microsoft-ToDo",
+            "commit": "74a414f12c7422a60b467da1476e76f67fcee1e9"
+          },
+          "engines": {
+            "dsh": ">=0.2.0"
+          }
+        }
+      ]
+    }
+  ]
+}

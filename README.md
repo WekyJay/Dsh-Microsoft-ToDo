@@ -14,6 +14,7 @@ A Microsoft To Do panel for DeepSeek Harness: lists on the left (with local grou
 | 今日 / 逾期 / 重要统计 | Today / overdue / starred counters |
 | 分组：侧栏按组收纳清单，本机保存 | Groups: collect lists in the sidebar, stored locally |
 | 我的一天：每天挑一批任务先做，次日自动清空 | My Day: pick a few tasks for today, resets each day |
+| 任务详情：备注、截止日期、提醒、重复、下一步、附件 | Task details: notes, due date, reminder, recurrence, steps, attachments |
 | 设备码登录，令牌由上游 MCP 服务缓存 | Device-code sign-in; the token cache lives in the upstream MCP server |
 | 中英双语界面 | Chinese and English UI |
 
@@ -30,6 +31,23 @@ A Microsoft To Do panel for DeepSeek Harness: lists on the left (with local grou
    已装过时先 `remove_bundle target=dsh-microsoft-todo`，DSH 不会热重载宿主模块。
 
 2. **从插件市场安装**：在 DSH 的设置 → 插件市场里添加本仓库的索引地址 `https://wekyjay.github.io/Dsh-Microsoft-ToDo/market/index.json`，然后在 Discover 里搜索「微软待办」安装。
+
+## 版本兼容 / Compatibility
+
+| 项目 | 值 |
+| --- | --- |
+| 插件版本 | `0.4.0` |
+| 支持的 DSH | `>=0.2.0`（`package.json` 的 `engines.dsh`，DSH 在安装/启用时强制校验） |
+| 实测环境 | DSH `0.2.2-rc.1` · macOS（Apple Silicon）· Node 25 |
+
+面板左下角显示插件版本和兼容状态：
+
+- 绿色「DSH 兼容」：当前运行版本满足 `engines.dsh`。
+- 红色「DSH 版本过低」：面板顶部同时给出提示，升级 DSH（`dsh update`）后刷新页面即可。
+- 灰色「DSH 版本未知」：运行在无法读取版本的环境（例如打包二进制），插件照常工作，只是不做断言。
+
+`engines.dsh` 不满足时 DSH 会在安装或启用阶段直接拒绝该版本；确需强装可用
+`dsh plugin --profile <p> allow-version dsh-microsoft-todo@<版本> --dsh-version <运行版本> --accept-risk` 显式豁免（可能崩溃或丢数据）。
 
 ## 首次使用 / First run
 

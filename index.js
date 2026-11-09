@@ -7,7 +7,9 @@
  * the board and talks to these routes document-relatively.
  */
 import { spawn } from 'node:child_process'
-import { readFile, writeFile, rename } from 'node:fs/promises'
+import { readFile, readdir, writeFile, rename } from 'node:fs/promises'
+import { homedir } from 'node:os'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 /** Absolute route prefix owned by this plugin. */
@@ -34,11 +36,168 @@ const MYDAY_FILE = fileURLToPath(new URL('./myday.json', import.meta.url))
 /** The zone the user's day boundaries are read in. */
 const TZONE = 'Asia/Shanghai'
 
+/** Graph, reached directly for the few fields the MCP tool surface omits. */
+const GRAPH = 'https://graph.microsoft.com/v1.0'
+
+/**
+ * The MSAL cache the MCP server writes after each silent refresh.
+ *
+ * The bridge keeps a token fresh as a side effect of talking to Graph, so the
+ * direct Graph calls here borrow that token instead of running a second
+ * sign-in flow.
+ */
+const TOKEN_CACHE = join(homedir(), '.config', 'microsoft-todo-mcp', 'token-cache.json')
+
 /** Upper bound on a request body, in bytes. */
 const BODY_LIMIT = 64 * 1024
 
+/** Uploads carry the file as base64, so they need a much wider bound. */
+const UPLOAD_LIMIT = 34 * 1024 * 1024
+
 /** How long `/api/today` is allowed to reuse its aggregate. */
 const TODAY_TTL_MS = 30_000
+
+/* ---------- version + compatibility ---------- */
+
+/**
+ * This plugin's manifest, read once for the version badge and the DSH range.
+ *
+ * `engines.dsh` is the requirement dsh itself enforces at install time; the
+ * panel shows the same range so a running install can explain a mismatch
+ * without the user having to read package.json.
+ */
+let manifestCache = null
+async function pluginManifest() {
+  if (manifestCache !== null) return manifestCache
+  let manifest = { name: 'dsh-microsoft-todo', version: '0.0.0', dshRange: '' }
+  try {
+    const raw = JSON.parse(await readFile(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf8'))
+    const range = raw?.engines?.dsh
+    manifest = {
+      name: typeof raw?.name === 'string' ? raw.name : manifest.name,
+      version: typeof raw?.version === 'string' ? raw.version : manifest.version,
+      dshRange: typeof range === 'string' ? range : '',
+    }
+  } catch { /* a packaged bundle without package.json still renders the panel */ }
+  manifestCache = manifest
+  return manifest
+}
+
+/** Parsed semantic version, or null when the text is not one. */
+function parseVersion(text) {
+  const match = /^v?(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$/.exec(String(text).trim())
+  if (match === null) return null
+  return {
+    major: Number(match[1]),
+    minor: Number(match[2]),
+    patch: Number(match[3]),
+    pre: typeof match[4] === 'string' ? match[4].split('.') : [],
+  }
+}
+
+function comparePart(left, right) {
+  return left === right ? 0 : (left < right ? -1 : 1)
+}
+
+/** Semver precedence, with prerelease ordering (0.2.2-rc.1 < 0.2.2). */
+function compareVersions(left, right) {
+  for (const key of ['major', 'minor', 'patch']) {
+    const order = comparePart(left[key], right[key])
+    if (order !== 0) return order
+  }
+  if (left.pre.length === 0 && right.pre.length === 0) return 0
+  if (left.pre.length === 0) return 1
+  if (right.pre.length === 0) return -1
+  for (let index = 0; index < Math.max(left.pre.length, right.pre.length); index += 1) {
+    const l = left.pre[index]
+    const r = right.pre[index]
+    if (l === undefined) return -1
+    if (r === undefined) return 1
+    const lNum = /^\d+$/.test(l)
+    const rNum = /^\d+$/.test(r)
+    if (lNum && rNum) {
+      const order = comparePart(Number(l), Number(r))
+      if (order !== 0) return order
+    } else if (lNum) return -1
+    else if (rNum) return 1
+    else {
+      const order = comparePart(l, r)
+      if (order !== 0) return order
+    }
+  }
+  return 0
+}
+
+/** One whitespace-separated comparator (`>=0.2.0`, `^0.2.0`, `~0.2.0`, `0.2.0`). */
+function satisfiesComparator(version, token) {
+  const match = /^(>=|<=|>|<|=|\^|~)?\s*(.+)$/.exec(token)
+  if (match === null) return false
+  const operator = match[1] ?? '='
+  const bound = parseVersion(match[2])
+  if (bound === null) return false
+  const order = compareVersions(version, bound)
+  if (operator === '>=') return order >= 0
+  if (operator === '<=') return order <= 0
+  if (operator === '>') return order > 0
+  if (operator === '<') return order < 0
+  if (operator === '=') return order === 0
+  if (order < 0) return false
+  const upper = operator === '~' || bound.major === 0
+    ? { major: bound.major, minor: bound.minor + 1, patch: 0, pre: [] }
+    : { major: bound.major + 1, minor: 0, patch: 0, pre: [] }
+  return compareVersions(version, upper) < 0
+}
+
+/** Whether `version` satisfies a plain AND range such as `>=0.2.0 <0.5.0`. */
+function satisfiesRange(versionText, range) {
+  const version = parseVersion(versionText)
+  if (version === null) return null
+  const tokens = String(range).trim().split(/\s+/).filter(Boolean)
+  if (tokens.length === 0) return null
+  return tokens.every(token => satisfiesComparator(version, token))
+}
+
+/**
+ * The running dsh version.
+ *
+ * A plugin bundle cannot import dsh's own packages, so this reads the same
+ * package dsh reads for its compatibility check (`dsh-app-boot`), from this
+ * machine's profiles. Returns null when the layout is something else (a
+ * packaged binary, a container) — the panel then says the version is unknown
+ * instead of guessing.
+ */
+async function runningDshVersion() {
+  const fromEnv = process.env.DSH_VERSION
+  if (typeof fromEnv === 'string' && parseVersion(fromEnv) !== null) return fromEnv.trim()
+  const homes = []
+  if (typeof process.env.DSH_HOME === 'string' && process.env.DSH_HOME !== '') homes.push(process.env.DSH_HOME)
+  homes.push(join(homedir(), '.dsh'))
+  for (const home of homes) {
+    let profiles = []
+    try { profiles = await readdir(join(home, 'profiles')) } catch { continue }
+    for (const profile of profiles) {
+      try {
+        const raw = JSON.parse(await readFile(join(home, 'profiles', profile, 'node_modules', '@deepseek-ai', 'dsh-app-boot', 'package.json'), 'utf8'))
+        if (typeof raw?.version === 'string' && parseVersion(raw.version) !== null) return raw.version
+      } catch { /* profile without dsh packages; keep looking */ }
+    }
+  }
+  return null
+}
+
+/** Version + compatibility payload used by the panel header. */
+async function metaPayload() {
+  const manifest = await pluginManifest()
+  const version = await runningDshVersion()
+  const compatible = manifest.dshRange === '' || version === null
+    ? null
+    : satisfiesRange(version, manifest.dshRange)
+  return {
+    plugin: { name: manifest.name, version: manifest.version },
+    dsh: { version, required: manifest.dshRange || null, compatible },
+  }
+}
+
 
 /** Calendar day (YYYY-MM-DD) of an instant, in the user's zone. */
 function dayOf(date) {
@@ -335,13 +494,291 @@ async function readToday(bridge, force = false) {
   return value
 }
 
+/** Escape one Graph path segment. */
+function seg(value) {
+  return encodeURIComponent(String(value))
+}
+
+/** The freshest access token in the MCP server's MSAL cache. */
+async function cachedToken() {
+  let cache
+  try {
+    cache = JSON.parse(await readFile(TOKEN_CACHE, 'utf8'))
+  } catch {
+    throw new Error('未找到微软登录令牌，请先在面板里完成一次设备码登录')
+  }
+  let best = null
+  for (const entry of Object.values(cache?.AccessToken ?? {})) {
+    if (entry === null || typeof entry !== 'object' || typeof entry.secret !== 'string' || entry.secret === '') continue
+    const expires = Number(entry.expires_on ?? 0)
+    if (best === null || expires > best.expires) best = { secret: entry.secret, expires }
+  }
+  if (best === null) throw new Error('未找到微软登录令牌，请先在面板里完成一次设备码登录')
+  return best
+}
+
+/** Ask the MCP server to refresh the cached token, then read it again. */
+async function refreshToken(bridge) {
+  try {
+    await bridge.call('list_task_lists', { maxResults: 1 }, 30_000)
+  } catch {}
+  return cachedToken()
+}
+
+/** One authenticated Graph call, refreshing the token once on a 401. */
+async function graph(bridge, path, init = {}) {
+  const headers = { 'content-type': 'application/json', ...(init.headers ?? {}) }
+  const attempt = async (token) => fetch(GRAPH + path, {
+    ...init,
+    headers: { ...headers, authorization: `Bearer ${token}` },
+  })
+  let token = await cachedToken()
+  if (token.expires * 1000 - Date.now() < 90_000) token = await refreshToken(bridge)
+  let res = await attempt(token.secret)
+  if (res.status === 401) {
+    token = await refreshToken(bridge)
+    res = await attempt(token.secret)
+  }
+  const text = await res.text()
+  let body = null
+  if (text !== '') {
+    try { body = JSON.parse(text) } catch { body = text }
+  }
+  if (!res.ok) {
+    const message = body?.error?.message ?? (typeof body === 'string' ? body : res.statusText)
+    throw new Error(`Graph ${res.status}: ${String(message).slice(0, 400)}`)
+  }
+  return body
+}
+
+/** Graph's task body only accepts HTML, so notes round-trip through this. */
+function toHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>')
+}
+
+/** HTML task body back to plain text for the notes editor. */
+function fromHtml(html) {
+  return String(html ?? '')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/p>/gi, '\n')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .trim()
+}
+
+/** One task's full detail: notes, dates, recurrence, steps and files. */
+async function readDetail(bridge, listId, taskId) {
+  const task = await graph(bridge, `/me/todo/lists/${seg(listId)}/tasks/${seg(taskId)}?$expand=checklistItems`)
+  let attachments = []
+  try {
+    const page = await graph(bridge, `/me/todo/lists/${seg(listId)}/tasks/${seg(taskId)}/attachments?$select=id,name,size,contentType`)
+    attachments = Array.isArray(page?.value) ? page.value : []
+  } catch {}
+  return {
+    listId,
+    task,
+    notes: fromHtml(task?.body?.content),
+    checklist: Array.isArray(task?.checklistItems) ? task.checklistItems : [],
+    attachments,
+  }
+}
+
+/** Map the detail sheet's recurrence draft onto the Graph recurrence object. */
+function recurrenceOf(input) {
+  const pattern = input?.pattern ?? {}
+  const type = ['daily', 'weekly', 'absoluteMonthly', 'relativeMonthly'].includes(pattern.type) ? pattern.type : 'weekly'
+  const interval = Math.max(1, Math.min(99, Number(pattern.interval ?? 1) || 1))
+  const out = { type, interval }
+  if (type === 'weekly' || type === 'relativeMonthly') {
+    const days = Array.isArray(pattern.daysOfWeek) && pattern.daysOfWeek.length > 0
+      ? pattern.daysOfWeek.filter(day => typeof day === 'string')
+      : ['monday']
+    out.daysOfWeek = days
+    if (type === 'weekly') out.firstDayOfWeek = 'sunday'
+    if (type === 'relativeMonthly') {
+      out.index = ['first', 'second', 'third', 'fourth', 'last'].includes(pattern.index) ? pattern.index : 'first'
+    }
+  }
+  if (type === 'absoluteMonthly') out.dayOfMonth = Math.max(1, Math.min(31, Number(pattern.dayOfMonth ?? 1) || 1))
+  const range = input?.range ?? {}
+  const kind = ['endDate', 'noEnd', 'numbered'].includes(range.type) ? range.type : 'noEnd'
+  const startDate = typeof range.startDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(range.startDate)
+    ? range.startDate
+    : dayOf(new Date())
+  const result = { pattern: out, range: { type: kind, startDate, recurrenceTimeZone: TZONE } }
+  if (kind === 'endDate') {
+    result.range.endDate = typeof range.endDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(range.endDate) ? range.endDate : startDate
+  }
+  if (kind === 'numbered') {
+    result.range.numberOfOccurrences = Math.max(1, Math.min(999, Number(range.numberOfOccurrences ?? 10) || 10))
+  }
+  return result
+}
+
+/** Apply one detail-sheet edit to a task, in one Graph PATCH. */
+async function saveDetail(bridge, body) {
+  const listId = String(body.listId ?? '')
+  const taskId = String(body.taskId ?? '')
+  if (listId === '' || taskId === '') throw new Error('listId and taskId are required')
+  const patch = {}
+  if (typeof body.title === 'string' && body.title.trim() !== '') patch.title = body.title.trim()
+  if (typeof body.bodyText === 'string') patch.body = { content: toHtml(body.bodyText), contentType: 'html' }
+  if (Object.hasOwn(body, 'dueDate')) {
+    patch.dueDateTime = typeof body.dueDate === 'string' && body.dueDate !== ''
+      ? { dateTime: `${body.dueDate}T17:00:00.0000000`, timeZone: TZONE }
+      : null
+  }
+  if (Object.hasOwn(body, 'reminderAt')) {
+    const at = typeof body.reminderAt === 'string' ? body.reminderAt : ''
+    patch.isReminderOn = at !== ''
+    patch.reminderDateTime = at === ''
+      ? null
+      : { dateTime: at.length === 16 ? `${at}:00.0000000` : at, timeZone: TZONE }
+  }
+  if (typeof body.importance === 'string' && ['low', 'normal', 'high'].includes(body.importance)) {
+    patch.importance = body.importance
+  }
+  if (Object.hasOwn(body, 'recurrence')) {
+    patch.recurrence = body.recurrence === null ? null : recurrenceOf(body.recurrence)
+  }
+  if (Object.keys(patch).length === 0) return null
+  const updated = await graph(bridge, `/me/todo/lists/${seg(listId)}/tasks/${seg(taskId)}`, {
+    method: 'PATCH',
+    body: JSON.stringify(patch),
+  })
+  todayCache = { at: 0, value: null }
+  return updated
+}
+
+/** Steps (checklist items) for one task, through the MCP server. */
+async function stepAction(bridge, body) {
+  const action = String(body.action ?? '')
+  const listId = String(body.listId ?? '')
+  const taskId = String(body.taskId ?? '')
+  if (listId === '' || taskId === '') throw new Error('listId and taskId are required')
+  if (action === 'add') {
+    const displayName = String(body.displayName ?? '').trim()
+    if (displayName === '') throw new Error('displayName is required')
+    return { item: unwrap(await bridge.call('add_checklist_item', { listId, taskId, displayName }, 30_000)) }
+  }
+  if (action === 'update') {
+    const args = { listId, taskId, itemId: String(body.itemId ?? '') }
+    if (typeof body.displayName === 'string') args.displayName = body.displayName
+    if (typeof body.isChecked === 'boolean') args.isChecked = body.isChecked
+    return { item: unwrap(await bridge.call('update_checklist_item', args, 30_000)) }
+  }
+  if (action === 'delete') {
+    await bridge.call('delete_checklist_item', { listId, taskId, itemId: String(body.itemId ?? '') }, 30_000)
+    return { ok: true }
+  }
+  if (action === 'promote') {
+    const itemId = String(body.itemId ?? '')
+    const page = unwrap(await bridge.call('list_checklist_items', { listId, taskId }, 30_000))
+    const items = Array.isArray(page?.items) ? page.items : []
+    const item = items.find(entry => entry.id === itemId)
+    if (item === undefined) throw new Error('checklist item not found')
+    const created = unwrap(await bridge.call('create_task', { listId, title: String(item.displayName) }, 45_000))
+    await bridge.call('delete_checklist_item', { listId, taskId, itemId }, 30_000)
+    todayCache = { at: 0, value: null }
+    return { task: created }
+  }
+  throw new Error(`unknown checklist action: ${action}`)
+}
+
+/** Add or remove the files attached to one task. */
+async function attachmentAction(bridge, body) {
+  const action = String(body.action ?? '')
+  const listId = String(body.listId ?? '')
+  const taskId = String(body.taskId ?? '')
+  if (listId === '' || taskId === '') throw new Error('listId and taskId are required')
+  const base = `/me/todo/lists/${seg(listId)}/tasks/${seg(taskId)}/attachments`
+  if (action === 'upload') {
+    const data = String(body.dataBase64 ?? '')
+    if (data === '') throw new Error('dataBase64 is required')
+    const bytes = Buffer.from(data, 'base64')
+    const name = String(body.name ?? 'attachment')
+    const contentType = String(body.contentType ?? 'application/octet-stream')
+    if (bytes.length <= 3 * 1024 * 1024) {
+      const attachment = await graph(bridge, base, {
+        method: 'POST',
+        body: JSON.stringify({
+          '@odata.type': '#microsoft.graph.taskFileAttachment',
+          name,
+          contentBytes: data,
+          contentType,
+        }),
+      })
+      return {
+        attachment: {
+          id: attachment?.id,
+          name: attachment?.name,
+          size: attachment?.size,
+          contentType: attachment?.contentType,
+        },
+      }
+    }
+    if (bytes.length > 25 * 1024 * 1024) throw new Error('file is larger than 25 MB')
+    // Files above the 3 MB inline limit go through a pre-authenticated
+    // upload session: 4 MB chunks, no Authorization header on the PUTs.
+    const session = await graph(bridge, `${base}/createUploadSession`, {
+      method: 'POST',
+      body: JSON.stringify({ AttachmentItem: { attachmentType: 'file', name, size: bytes.length } }),
+    })
+    const uploadUrl = String(session?.uploadUrl ?? '')
+    if (uploadUrl === '') throw new Error('Graph did not return an upload session')
+    const chunk = 4 * 1024 * 1024
+    for (let offset = 0; offset < bytes.length; offset += chunk) {
+      const end = Math.min(offset + chunk, bytes.length)
+      const res = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: {
+          'content-type': contentType,
+          'content-range': `bytes ${offset}-${end - 1}/${bytes.length}`,
+        },
+        body: bytes.subarray(offset, end),
+      })
+      if (!res.ok) {
+        const text = await res.text()
+        throw new Error(`upload session failed (${res.status}): ${text.slice(0, 300)}`)
+      }
+    }
+    return { attachment: { name, size: bytes.length, contentType } }
+  }
+  if (action === 'delete') {
+    const attachmentId = String(body.attachmentId ?? '')
+    if (attachmentId === '') throw new Error('attachmentId is required')
+    await graph(bridge, `${base}/${seg(attachmentId)}`, { method: 'DELETE' })
+    return { ok: true }
+  }
+  throw new Error(`unknown attachment action: ${action}`)
+}
+
+/** Read one attachment back as base64 so the browser can save it. */
+async function downloadAttachment(bridge, listId, taskId, attachmentId) {
+  const one = await graph(bridge, `/me/todo/lists/${seg(listId)}/tasks/${seg(taskId)}/attachments/${seg(attachmentId)}`)
+  return {
+    name: one?.name ?? 'attachment',
+    contentType: one?.contentType ?? 'application/octet-stream',
+    dataBase64: one?.contentBytes ?? '',
+  }
+}
+
 /** Read a JSON request body. */
-async function readBody(req) {
+async function readBody(req, limit = BODY_LIMIT) {
   const chunks = []
   let size = 0
   for await (const chunk of req) {
     size += chunk.length
-    if (size > BODY_LIMIT) throw new Error('request body too large')
+    if (size > limit) throw new Error('request body too large')
     chunks.push(chunk)
   }
   const text = Buffer.concat(chunks).toString('utf8').trim()
@@ -447,6 +884,10 @@ async function serve(bridge, req, res) {
   const url = new URL(String(req.url), 'http://localhost')
   const path = url.pathname.slice(ROUTE.length).replace(/\/$/, '') || '/'
   try {
+    if (path === '/api/meta' && req.method === 'GET') {
+      sendJson(res, 200, { ok: true, ...(await metaPayload()) })
+      return
+    }
     if (path === '/api/state' && req.method === 'GET') {
       const state = await readState(bridge)
       sendJson(res, 200, { ok: true, ...state })
@@ -502,6 +943,40 @@ async function serve(bridge, req, res) {
       }
       await writeGroups(groups)
       sendJson(res, 200, { ok: true, groups })
+      return
+    }
+    if (path === '/api/detail' && req.method === 'GET') {
+      const listId = url.searchParams.get('listId') ?? ''
+      const taskId = url.searchParams.get('taskId') ?? ''
+      if (listId === '' || taskId === '') throw new Error('listId and taskId are required')
+      sendJson(res, 200, { ok: true, ...(await readDetail(bridge, listId, taskId)) })
+      return
+    }
+    if (path === '/api/save' && req.method === 'POST') {
+      const body = await readBody(req)
+      const updated = await saveDetail(bridge, body)
+      const detail = await readDetail(bridge, String(body.listId), String(body.taskId))
+      sendJson(res, 200, { ok: true, updated, ...detail })
+      return
+    }
+    if (path === '/api/steps' && req.method === 'POST') {
+      const body = await readBody(req)
+      const result = await stepAction(bridge, body)
+      sendJson(res, 200, { ok: true, ...result })
+      return
+    }
+    if (path === '/api/attachment' && req.method === 'POST') {
+      const body = await readBody(req, UPLOAD_LIMIT)
+      const result = await attachmentAction(bridge, body)
+      sendJson(res, 200, { ok: true, ...result })
+      return
+    }
+    if (path === '/api/attachment' && req.method === 'GET') {
+      const listId = url.searchParams.get('listId') ?? ''
+      const taskId = url.searchParams.get('taskId') ?? ''
+      const attachmentId = url.searchParams.get('attachmentId') ?? ''
+      if (listId === '' || taskId === '' || attachmentId === '') throw new Error('listId, taskId and attachmentId are required')
+      sendJson(res, 200, { ok: true, ...(await downloadAttachment(bridge, listId, taskId, attachmentId)) })
       return
     }
     if (path === '/api/sign-in' && req.method === 'POST') {

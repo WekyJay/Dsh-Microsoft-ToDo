@@ -18,8 +18,8 @@ window.__ModuleLoader__.load({
     const LS_LIST = 'microsoft-todo:list'
 
     const DICT = {
-      zh: { panel: '微软待办', title: '微软待办', addPlaceholder: '添加任务，回车保存…', add: '添加', refresh: '刷新', today: '今日', overdue: '逾期', starred: '重要', lists: '清单', open: '未完成', done: '已完成', all: '全部', empty: '这个清单还没有任务', emptyOpen: '没有未完成的任务，清爽！', loading: '正在连接 Microsoft To Do…', retry: '重试', signInTitle: '连接你的 Microsoft To Do', signInBody: '需要在微软登录一次，之后由本机保存的令牌自动续期。', signInButton: '开始登录', signInHint: '打开下面的链接，输入代码完成授权：', codeCopied: '代码已复制', waiting: '等待你在浏览器里完成授权…', deleteConfirm: '删除这条任务？', failed: '操作失败', account: '已连接', star: '标为重要', unstar: '取消重要', markDone: '标记完成', reopen: '恢复未完成', recommended: '今日优先', groups: '分组', ungrouped: '未分组', groupSettings: '分组设置', newGroup: '新建分组', groupPlaceholder: '分组名称', save: '保存', cancel: '取消', deleteGroup: '删除分组', noGroup: '不分组', groupHint: '分组只保存在本机：微软 Graph 不提供 To Do 清单的分组信息，因此这里的分组不会同步到其他设备。', myday: '我的一天', mydayEmpty: '今天还没挑任务', mydayHint: '点任务右侧的太阳图标，把任务放进「我的一天」；每天自动清空。', addMyDay: '加入我的一天', removeMyDay: '移出我的一天' },
-      en: { panel: 'To Do', title: 'Microsoft To Do', addPlaceholder: 'Add a task, press Enter…', add: 'Add', refresh: 'Refresh', today: 'Today', overdue: 'Overdue', starred: 'Starred', lists: 'Lists', open: 'Open', done: 'Completed', all: 'All', empty: 'No tasks in this list yet', emptyOpen: 'Nothing open here — all clear.', loading: 'Connecting to Microsoft To Do…', retry: 'Retry', signInTitle: 'Connect your Microsoft To Do', signInBody: 'Sign in once; the token cached on this machine refreshes itself afterwards.', signInButton: 'Sign in', signInHint: 'Open the link below and enter the code:', codeCopied: 'Code copied', waiting: 'Waiting for you to finish signing in…', deleteConfirm: 'Delete this task?', failed: 'Action failed', account: 'Connected', star: 'Mark as important', unstar: 'Remove importance', markDone: 'Mark complete', reopen: 'Reopen', recommended: 'Today first', groups: 'Groups', ungrouped: 'Ungrouped', groupSettings: 'Manage groups', newGroup: 'New group', groupPlaceholder: 'Group name', save: 'Save', cancel: 'Cancel', deleteGroup: 'Delete group', noGroup: 'No group', groupHint: 'Groups are stored on this machine only: the Microsoft Graph To Do API does not expose list groups, so they do not sync to other devices.', myday: 'My Day', mydayEmpty: 'Nothing picked for today yet', mydayHint: 'Use the sun button on a task to add it to My Day; the list resets every day.', addMyDay: 'Add to My Day', removeMyDay: 'Remove from My Day' },
+      zh: { panel: '微软待办', title: '微软待办', addPlaceholder: '添加任务，回车保存…', add: '添加', refresh: '刷新', today: '今日', overdue: '逾期', starred: '重要', lists: '清单', open: '未完成', done: '已完成', all: '全部', empty: '这个清单还没有任务', emptyOpen: '没有未完成的任务，清爽！', loading: '正在连接 Microsoft To Do…', retry: '重试', signInTitle: '连接你的 Microsoft To Do', signInBody: '需要在微软登录一次，之后由本机保存的令牌自动续期。', signInButton: '开始登录', signInHint: '打开下面的链接，输入代码完成授权：', codeCopied: '代码已复制', waiting: '等待你在浏览器里完成授权…', deleteConfirm: '删除这条任务？', failed: '操作失败', account: '已连接', star: '标为重要', unstar: '取消重要', markDone: '标记完成', reopen: '恢复未完成', recommended: '今日优先', groups: '分组', ungrouped: '未分组', groupSettings: '分组设置', newGroup: '新建分组', groupPlaceholder: '分组名称', save: '保存', cancel: '取消', deleteGroup: '删除分组', noGroup: '不分组', groupHint: '分组只保存在本机：微软 Graph 不提供 To Do 清单的分组信息，因此这里的分组不会同步到其他设备。', myday: '我的一天', mydayEmpty: '今天还没挑任务', mydayHint: '点任务右侧的太阳图标，把任务放进「我的一天」；每天自动清空。', addMyDay: '加入我的一天', removeMyDay: '移出我的一天', flaggedEmails: '标记的电子邮件', detail: '详情', notes: '备注', notesPlaceholder: '写点备注…', dueDate: '截止日期', reminder: '提醒我', noReminder: '无提醒', recurrence: '重复', repeatNone: '不重复', repeatDaily: '每天', repeatWeekly: '每周', repeatMonthly: '每月', repeatInterval: '间隔', repeatDays: '重复于', repeatEnd: '结束', repeatNoEnd: '永不结束', repeatEndDate: '在日期结束', steps: '下一步', stepPlaceholder: '添加一个步骤…', promote: '提升为任务', attachments: '添加文件', attach: '上传文件', noAttachments: '还没有文件', remove: '移除', saving: '保存中…', saved: '已保存', uploading: '上传中…', fileTooLarge: '文件超过 25 MB', repeatHint: '服务端可能把结束方式保存为「永不结束」，这是 Graph 的已知问题。', doneLabel: '完成', version: '版本', compatOk: 'DSH 兼容', compatBad: 'DSH 版本过低', compatUnknown: 'DSH 版本未知', compatWarn: '当前 DSH {dsh} 低于本插件要求的 {required}，部分功能可能异常。请升级 DSH（dsh update）后刷新页面。', compatUnknownHint: '未能识别当前 DSH 版本，无法确认兼容性。', deleteTask: '删除任务' },
+      en: { panel: 'To Do', title: 'Microsoft To Do', addPlaceholder: 'Add a task, press Enter…', add: 'Add', refresh: 'Refresh', today: 'Today', overdue: 'Overdue', starred: 'Starred', lists: 'Lists', open: 'Open', done: 'Completed', all: 'All', empty: 'No tasks in this list yet', emptyOpen: 'Nothing open here — all clear.', loading: 'Connecting to Microsoft To Do…', retry: 'Retry', signInTitle: 'Connect your Microsoft To Do', signInBody: 'Sign in once; the token cached on this machine refreshes itself afterwards.', signInButton: 'Sign in', signInHint: 'Open the link below and enter the code:', codeCopied: 'Code copied', waiting: 'Waiting for you to finish signing in…', deleteConfirm: 'Delete this task?', failed: 'Action failed', account: 'Connected', star: 'Mark as important', unstar: 'Remove importance', markDone: 'Mark complete', reopen: 'Reopen', recommended: 'Today first', groups: 'Groups', ungrouped: 'Ungrouped', groupSettings: 'Manage groups', newGroup: 'New group', groupPlaceholder: 'Group name', save: 'Save', cancel: 'Cancel', deleteGroup: 'Delete group', noGroup: 'No group', groupHint: 'Groups are stored on this machine only: the Microsoft Graph To Do API does not expose list groups, so they do not sync to other devices.', myday: 'My Day', mydayEmpty: 'Nothing picked for today yet', mydayHint: 'Use the sun button on a task to add it to My Day; the list resets every day.', addMyDay: 'Add to My Day', removeMyDay: 'Remove from My Day', flaggedEmails: 'Flagged emails', detail: 'Details', notes: 'Notes', notesPlaceholder: 'Write a note…', dueDate: 'Due date', reminder: 'Remind me', noReminder: 'No reminder', recurrence: 'Repeat', repeatNone: 'Never', repeatDaily: 'Daily', repeatWeekly: 'Weekly', repeatMonthly: 'Monthly', repeatInterval: 'Every', repeatDays: 'Repeat on', repeatEnd: 'Ends', repeatNoEnd: 'Never', repeatEndDate: 'On date', steps: 'Steps', stepPlaceholder: 'Add a step…', promote: 'Promote to task', attachments: 'Files', attach: 'Upload file', noAttachments: 'No files yet', remove: 'Remove', saving: 'Saving…', saved: 'Saved', uploading: 'Uploading…', fileTooLarge: 'File is larger than 25 MB', repeatHint: 'Graph may persist the range as never-ending; that is a known service issue.', doneLabel: 'Complete', version: 'Version', compatOk: 'DSH compatible', compatBad: 'DSH too old', compatUnknown: 'DSH version unknown', compatWarn: 'This DSH is {dsh}, below the {required} this plugin needs. Some features may misbehave. Upgrade DSH (dsh update), then reload this page.', compatUnknownHint: 'The running DSH version could not be detected, so compatibility is unverified.', deleteTask: 'Delete task' },
     }
 
     const CSS = `
@@ -110,7 +110,44 @@ window.__ModuleLoader__.load({
 .mtx-gcount{font-size:10.5px;color:var(--dsw-alias-label-secondary);opacity:.75;font-variant-numeric:tabular-nums}
 .mtx-listrow.sub{padding-left:24px}
 .mtx-aside-sub{color:var(--dsw-alias-label-secondary);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:10px 8px 4px}
+.mtx-row-main{flex:1;min-width:0;cursor:pointer;border-radius:6px;padding:2px 4px;margin:-2px -4px}
+.mtx-row-main:hover{background:var(--dsw-alias-interactive-bg-hover)}
+.mtx-mask{position:absolute;inset:0;background:rgba(0,0,0,.28);z-index:90}
+.mtx-drawer{position:absolute;top:0;right:0;bottom:0;width:min(420px,94%);background:var(--dsw-alias-bg-1,#fff);border-left:1px solid var(--dsw-alias-border-l1,rgba(0,0,0,.1));box-shadow:-12px 0 32px rgba(0,0,0,.16);z-index:95;display:flex;flex-direction:column}
+.mtx-drawer-head{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--dsw-alias-border-l1,rgba(0,0,0,.08))}
+.mtx-drawer-title{flex:1;min-width:0;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtx-drawer-body{flex:1;overflow:auto;padding:12px 14px 16px;display:flex;flex-direction:column;gap:14px}
+.mtx-field{display:flex;flex-direction:column;gap:5px}
+.mtx-field>label{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dsw-alias-label-secondary)}
+.mtx-field input[type=text],.mtx-field input[type=date],.mtx-field input[type=datetime-local],.mtx-field textarea,.mtx-field select{width:100%;box-sizing:border-box;font:inherit;font-size:12.5px;color:inherit;background:var(--dsw-alias-bg-layer-1);border:1px solid var(--dsw-alias-border-l1,rgba(0,0,0,.12));border-radius:8px;padding:7px 9px;outline:none}
+.mtx-field textarea{min-height:88px;resize:vertical;line-height:1.55}
+.mtx-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mtx-inline .mtx-field{flex:1;min-width:110px}
+.mtx-weekdays{display:flex;gap:4px;flex-wrap:wrap}
+.mtx-wd{width:26px;height:26px;border-radius:50%;border:1px solid var(--dsw-alias-border-l1,rgba(0,0,0,.14));background:transparent;color:inherit;font:inherit;font-size:11px;cursor:pointer;padding:0}
+.mtx-wd.on{border-color:#2564CF;background:color-mix(in srgb,#2564CF 14%,transparent);color:#2564CF;font-weight:600}
+.mtx-note-small{font-size:11px;color:var(--dsw-alias-label-secondary);line-height:1.55}
+.mtx-steps{display:flex;flex-direction:column;gap:4px}
+.mtx-step{display:flex;align-items:center;gap:8px;padding:4px 2px;border-radius:7px}
+.mtx-step:hover{background:var(--dsw-alias-interactive-bg-hover)}
+.mtx-step input[type=checkbox]{margin:0;accent-color:#2564CF}
+.mtx-step-name{flex:1;min-width:0;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtx-step.done .mtx-step-name{text-decoration:line-through;opacity:.55}
+.mtx-step .mtx-iconbtn{opacity:0}
+.mtx-step:hover .mtx-iconbtn{opacity:1}
+.mtx-files{display:flex;flex-direction:column;gap:4px}
+.mtx-file{display:flex;align-items:center;gap:8px;font-size:12.5px}
+.mtx-file-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtx-file-size{font-size:10.5px;color:var(--dsw-alias-label-secondary)}
+.mtx-drawer-foot{padding:10px 14px;border-top:1px solid var(--dsw-alias-border-l1,rgba(0,0,0,.08));display:flex;gap:8px;align-items:center}
+.mtx-drawer-foot .spacer{flex:1}
 .mtx-aside-foot{margin-top:auto;padding-top:10px}
+.mtx-verline{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:6px 8px 2px;font-size:10.5px;color:var(--dsw-alias-label-secondary)}
+.mtx-verchip{border-radius:999px;padding:1px 7px;font-size:10px;line-height:1.6;border:1px solid transparent;white-space:nowrap}
+.mtx-verchip.ok{color:#1F7A3D;background:rgba(31,122,61,.12);border-color:rgba(31,122,61,.28)}
+.mtx-verchip.bad{color:#B42318;background:rgba(180,35,24,.12);border-color:rgba(180,35,24,.3)}
+.mtx-verchip.unknown{color:var(--dsw-alias-label-secondary);background:var(--dsw-alias-bg-layer-2);border-color:var(--dsw-alias-border-l2)}
+.mtx-warn{margin:10px 18px 0;padding:8px 12px;border-radius:9px;font-size:12px;line-height:1.55;color:#8A1C13;background:rgba(180,35,24,.08);border:1px solid rgba(180,35,24,.24)}
 .mtx-footbtn{display:flex;align-items:center;gap:6px;width:100%;border:0;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:11.5px;padding:6px 8px;border-radius:7px;cursor:pointer}
 .mtx-footbtn:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}
 .mtx-modal{position:fixed;inset:0;background:rgba(0,0,0,.44);display:flex;align-items:center;justify-content:center;z-index:80;padding:20px}
@@ -227,8 +264,12 @@ window.__ModuleLoader__.load({
       const [sheet, setSheet] = useState(null)
       const [myday, setMyday] = useState(null)
       const [pane, setPane] = useState('list')
+      const [detail, setDetail] = useState(null)
+      const [meta, setMeta] = useState(null)
       const listIdRef = useRef(listId)
       listIdRef.current = listId
+      const detailRef = useRef(detail)
+      detailRef.current = detail
 
       const complain = useCallback((cause) => {
         const message = cause instanceof Error ? cause.message : String(cause)
@@ -262,9 +303,14 @@ window.__ModuleLoader__.load({
         try { setMyday(await get(`myday${force ? '?refresh=1' : ''}`)) } catch (cause) { complain(cause) }
       }, [complain])
 
+      const loadMeta = useCallback(async () => {
+        try { setMeta(await get('meta')) } catch { /* the panel works without the badge */ }
+      }, [])
+
       const bootstrap = useCallback(async () => {
         setPhase('loading')
         setError('')
+        void loadMeta()
         try {
           const state = await get('state')
           setAuth(state.auth ?? null)
@@ -283,7 +329,7 @@ window.__ModuleLoader__.load({
           setError(cause instanceof Error ? cause.message : String(cause))
           setPhase('error')
         }
-      }, [loadMyDay, loadTasks, loadToday])
+      }, [loadMeta, loadMyDay, loadTasks, loadToday])
 
       useEffect(() => { void bootstrap() }, [bootstrap])
 
@@ -359,6 +405,53 @@ window.__ModuleLoader__.load({
         } catch (cause) { complain(cause) } finally { setBusy(false) }
       }, [complain, myday])
 
+      const openDetail = useCallback(async (task, owner) => {
+        const target = typeof owner === 'string' && owner !== '' ? owner : listIdRef.current
+        if (!target || !task || typeof task.id !== 'string') return
+        setDetail({ listId: target, taskId: task.id, loading: true, task, notes: '', checklist: [], attachments: [] })
+        try {
+          const payload = await get(`detail?listId=${encodeURIComponent(target)}&taskId=${encodeURIComponent(task.id)}`)
+          setDetail(current => current !== null && current.taskId === task.id
+            ? {
+                listId: target,
+                taskId: task.id,
+                loading: false,
+                task: payload.task ?? task,
+                notes: typeof payload.notes === 'string' ? payload.notes : '',
+                checklist: Array.isArray(payload.checklist) ? payload.checklist : [],
+                attachments: Array.isArray(payload.attachments) ? payload.attachments : [],
+              }
+            : current)
+        } catch (cause) {
+          complain(cause)
+          setDetail(null)
+        }
+      }, [complain])
+
+      /** Re-read the open detail after a change, keeping the drawer's fields. */
+      const reloadDetail = useCallback(async () => {
+        const current = detailRef.current
+        if (current === null) return
+        try {
+          const payload = await get(`detail?listId=${encodeURIComponent(current.listId)}&taskId=${encodeURIComponent(current.taskId)}`)
+          setDetail({
+            listId: current.listId,
+            taskId: current.taskId,
+            loading: false,
+            task: payload.task,
+            notes: typeof payload.notes === 'string' ? payload.notes : '',
+            checklist: Array.isArray(payload.checklist) ? payload.checklist : [],
+            attachments: Array.isArray(payload.attachments) ? payload.attachments : [],
+          })
+        } catch (cause) { complain(cause) }
+      }, [complain])
+
+      const afterDetailChange = useCallback(() => {
+        void loadTasks(listIdRef.current)
+        void loadToday(true)
+        void loadMyDay(true)
+      }, [loadMyDay, loadTasks, loadToday])
+
       const addTask = useCallback(async (event) => {
         event.preventDefault()
         const title = draft.trim()
@@ -403,6 +496,12 @@ window.__ModuleLoader__.load({
         return acc
       }, {})
       const recommendations = [...(today?.overdue ?? []), ...(today?.dueToday ?? [])].slice(0, 6)
+      const pinned = [
+        lists.find(list => list.wellknownListName === 'flaggedEmails'),
+        lists.find(list => list.wellknownListName === 'defaultList'),
+      ].filter(list => list !== undefined)
+      const pinnedIds = new Set(pinned.map(list => list.id))
+      const pinnedLabel = (list) => list.wellknownListName === 'flaggedEmails' ? t('flaggedEmails') : list.displayName
       const mydayItems = Array.isArray(myday?.items) ? myday.items : []
       const mydayIds = new Set(Array.isArray(myday?.taskIds) ? myday.taskIds : [])
       const rows = pane === 'myday'
@@ -419,6 +518,7 @@ window.__ModuleLoader__.load({
             onStar: () => { void toggleStar(item, item.listId) },
             onDelete: () => { void removeTask(item, item.listId) },
             onMyDay: () => { void toggleMyDay(item) },
+            onOpen: () => { void openDetail(item, item.listId) },
           }))
         : visible.map(task => h(TaskRow, {
             key: task.id,
@@ -432,6 +532,7 @@ window.__ModuleLoader__.load({
             onStar: () => { void toggleStar(task) },
             onDelete: () => { void removeTask(task) },
             onMyDay: () => { void toggleMyDay(task) },
+            onOpen: () => { void openDetail(task) },
           }))
 
       const placed = new Set()
@@ -440,29 +541,37 @@ window.__ModuleLoader__.load({
         const name = typeof group?.name === 'string' ? group.name.trim() : ''
         if (name === '') continue
         const ids = Array.isArray(group.listIds) ? group.listIds : []
-        const members = lists.filter(list => ids.includes(list.id))
+        const members = lists.filter(list => ids.includes(list.id) && !pinnedIds.has(list.id))
         if (members.length === 0) continue
         for (const list of members) placed.add(list.id)
         sections.push({ key: `group:${name}`, name, lists: members })
       }
-      const loose = lists.filter(list => !placed.has(list.id))
+      const loose = lists.filter(list => !placed.has(list.id) && !pinnedIds.has(list.id))
 
-      const renderRow = (list, sub) => {
+      const renderRow = (list, sub, label) => {
         const row = counts[list.id]
+        const text = label ?? list.displayName
         return h('button', {
           key: list.id,
           className: `mtx-listrow${sub ? ' sub' : ''}${list.id === listId ? ' on' : ''}`,
           onClick: () => selectList(list.id),
-          title: list.displayName,
+          title: text,
         },
           h('span', { className: `mtx-listdot${row && row.overdue > 0 ? ' late' : ''}` }),
-          h('span', { className: 'mtx-listname' }, list.displayName),
+          h('span', { className: 'mtx-listname' }, text),
           h('span', { className: 'mtx-listcount' }, row ? String(row.open) : ''))
       }
 
       const openSheet = () => setSheet({
         groups: groups.map(group => ({ name: group.name, listIds: [...(group.listIds ?? [])] })),
       })
+
+      const compatState = typeof meta?.dsh?.compatible === 'boolean' ? meta.dsh.compatible : null
+      const compatClass = compatState === true ? 'ok' : compatState === false ? 'bad' : 'unknown'
+      const compatLabel = compatState === true ? t('compatOk') : compatState === false ? t('compatBad') : t('compatUnknown')
+      const compatTitle = compatState === false
+        ? `DSH ${meta.dsh.version} < ${meta.dsh.required}`
+        : compatState === null ? t('compatUnknownHint') : `DSH ${meta.dsh.version}`
 
       return h('div', { className: 'mtx-page', style: { position: 'relative' } },
         h('header', { className: 'mtx-head' },
@@ -479,6 +588,11 @@ window.__ModuleLoader__.load({
             h(Stat, { label: t('starred'), value: today?.starred?.length, tone: 'starred' })),
           h('button', { className: 'mtx-btn', onClick: () => { void refreshAll() }, disabled: busy, title: t('refresh') },
             h(IconRefresh), t('refresh'))),
+        compatState === false
+          ? h('div', { className: 'mtx-warn' }, t('compatWarn')
+              .replace('{dsh}', meta.dsh.version ?? '?')
+              .replace('{required}', meta.dsh.required ?? ''))
+          : null,
         h('div', { className: 'mtx-body' },
           h('aside', { className: 'mtx-aside' },
             h('div', { className: 'mtx-aside-head' }, h('span', null, t('lists')), h('span', null, String(lists.length))),
@@ -490,6 +604,7 @@ window.__ModuleLoader__.load({
               h(IconSun, { filled: pane === 'myday', size: 14 }),
               h('span', { className: 'mtx-listname' }, t('myday')),
               h('span', { className: 'mtx-listcount' }, String(mydayItems.length))),
+            pinned.map(list => renderRow(list, false, pinnedLabel(list))),
             sections.map(section => {
               const open = collapsed[section.key] !== true
               return h('div', { key: section.key },
@@ -531,7 +646,12 @@ window.__ModuleLoader__.load({
               : null,
             h('div', { className: 'mtx-aside-foot' },
               h('button', { className: 'mtx-footbtn', onClick: openSheet, title: t('groupSettings') },
-                h(IconGear), t('groupSettings'))))),
+                h(IconGear), t('groupSettings')),
+              meta
+                ? h('div', { className: 'mtx-verline', title: compatTitle },
+                    h('span', null, `${t('version')} ${meta.plugin?.version ?? ''}`),
+                    h('span', { className: `mtx-verchip ${compatClass}` }, compatLabel))
+                : null))),
           h('section', { className: 'mtx-main' },
             pane === 'myday'
               ? h('div', { className: 'mtx-mydayhead' },
@@ -586,6 +706,28 @@ window.__ModuleLoader__.load({
                 setSheet(null)
               } catch (cause) { complain(cause) } finally { setBusy(false) }
             },
+          })
+        , detail === null ? null : h(TaskDetail, {
+            key: detail.taskId,
+            t,
+            detail,
+            todayKey,
+            mydayOn: mydayIds.has(detail.taskId),
+            onClose: () => setDetail(null),
+            onReload: reloadDetail,
+            onAfter: afterDetailChange,
+            onMyDay: () => { void toggleMyDay(detail.task ?? { id: detail.taskId }) },
+            onComplete: () => {
+              const task = detail.task ?? { id: detail.taskId }
+              setDetail(null)
+              void completeTask(task, detail.listId)
+            },
+            onDelete: () => {
+              const task = detail.task ?? { id: detail.taskId }
+              setDetail(null)
+              void removeTask(task, detail.listId)
+            },
+            complain,
           }))
     }
 
@@ -657,11 +799,355 @@ window.__ModuleLoader__.load({
       }, label)
     }
 
-    function TaskRow({ task, todayKey, t, busy, onComplete, onReopen, onStar, onDelete, onMyDay, mydayOn = false, showList = false }) {
+    /** Monday-first order used by Graph's pattern.daysOfWeek. */
+    const WDAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+    /** A Graph weekday name in the shell's language (2024-01-01 was a Monday). */
+    function dayShort(name) {
+      const at = WDAYS.indexOf(name)
+      const base = new Date(2024, 0, 1 + (at < 0 ? 0 : at))
+      return new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(base)
+    }
+
+    /** The recurrence kind a task currently has, in the editor's vocabulary. */
+    function recurrenceType(recurrence) {
+      const type = recurrence?.pattern?.type
+      if (type === 'daily' || type === 'weekly' || type === 'absoluteMonthly') return type
+      if (type === 'relativeMonthly') return 'absoluteMonthly'
+      return 'none'
+    }
+
+    /** Local file to bare base64, as the host's upload route expects it. */
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(String(reader.result ?? '').replace(/^data:[^,]*,/, ''))
+        reader.onerror = () => reject(reader.error ?? new Error('could not read the file'))
+        reader.readAsDataURL(file)
+      })
+    }
+
+    function base64ToBlob(data, type) {
+      const binary = atob(data)
+      const bytes = new Uint8Array(binary.length)
+      for (let at = 0; at < binary.length; at += 1) bytes[at] = binary.charCodeAt(at)
+      return new Blob([bytes], { type })
+    }
+
+    function formatSize(size) {
+      const bytes = Number(size ?? 0)
+      if (!Number.isFinite(bytes) || bytes <= 0) return ''
+      if (bytes < 1024) return `${bytes} B`
+      if (bytes < 1024 * 1024) return `${Math.round(bytes / 102.4) / 10} KB`
+      return `${Math.round(bytes / 104857.6) / 10} MB`
+    }
+
+    /**
+     * One task's detail drawer: notes, dates, reminder, repeat, steps and files.
+     * Steps and files go through the host's Graph bridge because the MCP tool
+     * surface covers neither recurrence nor attachments.
+     */
+    function TaskDetail({ t, detail, todayKey, mydayOn, onClose, onReload, onAfter, onMyDay, onComplete, onDelete, complain }) {
+      const task = detail.task ?? {}
+      const [title, setTitle] = useState(typeof task.title === 'string' ? task.title : '')
+      const [notes, setNotes] = useState(detail.notes ?? '')
+      const [dueDate, setDueDate] = useState(() => String(task.dueDateTime?.dateTime ?? '').slice(0, 10))
+      const [reminderAt, setReminderAt] = useState(() => {
+        const at = String(task.reminderDateTime?.dateTime ?? '')
+        return at === '' ? '' : at.slice(0, 16)
+      })
+      const [repeat, setRepeat] = useState(() => recurrenceType(task.recurrence))
+      const [repeatEvery, setRepeatEvery] = useState(() => String(task.recurrence?.pattern?.interval ?? 1))
+      const [repeatDays, setRepeatDays] = useState(() => new Set(Array.isArray(task.recurrence?.pattern?.daysOfWeek) ? task.recurrence.pattern.daysOfWeek : ['monday']))
+      const [endKind, setEndKind] = useState(() => {
+        const kind = task.recurrence?.range?.type
+        return kind === 'endDate' || kind === 'numbered' ? kind : 'noEnd'
+      })
+      const [endDate, setEndDate] = useState(() => String(task.recurrence?.range?.endDate ?? '').slice(0, 10))
+      const [stepDraft, setStepDraft] = useState('')
+      const [saving, setSaving] = useState(false)
+      const [uploading, setUploading] = useState(false)
+      const fileInput = useRef(null)
+
+      const save = async () => {
+        setSaving(true)
+        try {
+          const payload = {
+            listId: detail.listId,
+            taskId: detail.taskId,
+            title,
+            bodyText: notes,
+            dueDate,
+            importance: ['low', 'normal', 'high'].includes(task.importance) ? task.importance : 'normal',
+          }
+          payload.reminderAt = reminderAt
+          payload.recurrence = repeat === 'none'
+            ? null
+            : {
+                pattern: {
+                  type: repeat,
+                  interval: Math.max(1, Math.min(99, Number(repeatEvery) || 1)),
+                  daysOfWeek: [...repeatDays],
+                },
+                range: {
+                  type: endKind,
+                  startDate: dueDate !== '' ? dueDate : todayKey,
+                  endDate: endKind === 'endDate' ? (endDate !== '' ? endDate : (dueDate || todayKey)) : undefined,
+                },
+              }
+          await post('save', payload)
+          await onReload()
+          onAfter()
+        } catch (cause) { complain(cause) } finally { setSaving(false) }
+      }
+
+      const toggleRepeatDay = (name) => {
+        setRepeatDays(previous => {
+          const next = new Set(previous)
+          if (next.has(name)) next.delete(name)
+          else next.add(name)
+          if (next.size === 0) next.add(name)
+          return next
+        })
+      }
+
+      const addStep = async () => {
+        const displayName = stepDraft.trim()
+        if (displayName === '') return
+        try {
+          await post('steps', { action: 'add', listId: detail.listId, taskId: detail.taskId, displayName })
+          setStepDraft('')
+          await onReload()
+          onAfter()
+        } catch (cause) { complain(cause) }
+      }
+
+      const updateStep = async (item, patch) => {
+        try {
+          await post('steps', { action: 'update', listId: detail.listId, taskId: detail.taskId, itemId: item.id, ...patch })
+          await onReload()
+          onAfter()
+        } catch (cause) { complain(cause) }
+      }
+
+      const removeStep = async (item) => {
+        try {
+          await post('steps', { action: 'delete', listId: detail.listId, taskId: detail.taskId, itemId: item.id })
+          await onReload()
+          onAfter()
+        } catch (cause) { complain(cause) }
+      }
+
+      const promoteStep = async (item) => {
+        try {
+          await post('steps', { action: 'promote', listId: detail.listId, taskId: detail.taskId, itemId: item.id })
+          await onReload()
+          onAfter()
+        } catch (cause) { complain(cause) }
+      }
+
+      const uploadFile = async (event) => {
+        const file = event.target.files && event.target.files[0]
+        event.target.value = ''
+        if (!file) return
+        if (file.size > 25 * 1024 * 1024) { complain(new Error(t('fileTooLarge'))); return }
+        setUploading(true)
+        try {
+          const dataBase64 = await fileToBase64(file)
+          await post('attachment', {
+            action: 'upload',
+            listId: detail.listId,
+            taskId: detail.taskId,
+            name: file.name,
+            contentType: file.type === '' ? 'application/octet-stream' : file.type,
+            dataBase64,
+          })
+          await onReload()
+          onAfter()
+        } catch (cause) { complain(cause) } finally { setUploading(false) }
+      }
+
+      const downloadFile = async (attachment) => {
+        try {
+          const payload = await get(`attachment?listId=${encodeURIComponent(detail.listId)}&taskId=${encodeURIComponent(detail.taskId)}&attachmentId=${encodeURIComponent(attachment.id)}`)
+          const blob = base64ToBlob(payload.dataBase64 ?? '', payload.contentType ?? 'application/octet-stream')
+          const url = URL.createObjectURL(blob)
+          const anchor = document.createElement('a')
+          anchor.href = url
+          anchor.download = payload.name ?? attachment.name ?? 'attachment'
+          anchor.click()
+          window.setTimeout(() => URL.revokeObjectURL(url), 4000)
+        } catch (cause) { complain(cause) }
+      }
+
+      const removeFile = async (attachment) => {
+        try {
+          await post('attachment', { action: 'delete', listId: detail.listId, taskId: detail.taskId, attachmentId: attachment.id })
+          await onReload()
+          onAfter()
+        } catch (cause) { complain(cause) }
+      }
+
+      const checklist = Array.isArray(detail.checklist) ? detail.checklist : []
+      const files = Array.isArray(detail.attachments) ? detail.attachments : []
+
+      return h('div', { className: 'mtx-mask', onMouseDown: (event) => { if (event.target === event.currentTarget) onClose() } },
+        h('div', { className: 'mtx-drawer' },
+          h('div', { className: 'mtx-drawer-head' },
+            h('span', { className: 'mtx-drawer-title', title: t('detail') }, t('detail')),
+            h('button', { type: 'button', className: 'mtx-iconbtn', onClick: onClose, title: t('cancel') }, '✕')),
+          h('div', { className: 'mtx-drawer-body' },
+            h('div', { className: 'mtx-field' },
+              h('input', {
+                type: 'text',
+                value: title,
+                onChange: (event) => setTitle(event.target.value),
+                onKeyDown: (event) => { if (event.key === 'Enter') { event.preventDefault(); void save() } },
+              })),
+            h('div', { className: 'mtx-field' },
+              h('label', null, t('notes')),
+              h('textarea', {
+                value: notes,
+                placeholder: t('notesPlaceholder'),
+                onChange: (event) => setNotes(event.target.value),
+              })),
+            h('div', { className: 'mtx-inline' },
+              h('div', { className: 'mtx-field' },
+                h('label', null, t('dueDate')),
+                h('input', { type: 'date', value: dueDate, onChange: (event) => setDueDate(event.target.value) })),
+              h('div', { className: 'mtx-field' },
+                h('label', null, t('reminder')),
+                h('input', { type: 'datetime-local', value: reminderAt, onChange: (event) => setReminderAt(event.target.value) }))),
+            h('div', { className: 'mtx-field' },
+              h('label', null, t('recurrence')),
+              h('div', { className: 'mtx-inline' },
+                h('select', {
+                  value: repeat,
+                  onChange: (event) => setRepeat(event.target.value),
+                  style: { flex: 1 },
+                },
+                  h('option', { value: 'none' }, t('repeatNone')),
+                  h('option', { value: 'daily' }, t('repeatDaily')),
+                  h('option', { value: 'weekly' }, t('repeatWeekly')),
+                  h('option', { value: 'absoluteMonthly' }, t('repeatMonthly'))),
+                repeat === 'none' ? null : h('input', {
+                  type: 'text',
+                  inputMode: 'numeric',
+                  value: repeatEvery,
+                  onChange: (event) => setRepeatEvery(event.target.value.replace(/[^0-9]/g, '')),
+                  style: { width: 54 },
+                  title: t('repeatInterval'),
+                })),
+              repeat === 'weekly'
+                ? h('div', { className: 'mtx-weekdays' },
+                    WDAYS.map(name => h('button', {
+                      key: name,
+                      type: 'button',
+                      className: `mtx-wd${repeatDays.has(name) ? ' on' : ''}`,
+                      onClick: () => toggleRepeatDay(name),
+                    }, dayShort(name))))
+                : null,
+              repeat === 'none'
+                ? null
+                : h('div', { className: 'mtx-inline' },
+                    h('select', {
+                      value: endKind,
+                      onChange: (event) => setEndKind(event.target.value),
+                      style: { flex: 1 },
+                    },
+                      h('option', { value: 'noEnd' }, t('repeatNoEnd')),
+                      h('option', { value: 'endDate' }, t('repeatEndDate'))),
+                    endKind === 'endDate'
+                      ? h('input', { type: 'date', value: endDate, onChange: (event) => setEndDate(event.target.value), style: { flex: 1 } })
+                      : null),
+              repeat === 'none' ? null : h('div', { className: 'mtx-note-small' }, t('repeatHint'))),
+            h('div', { className: 'mtx-field' },
+              h('label', null, t('steps')),
+              h('div', { className: 'mtx-steps' },
+                checklist.map(item => h('div', { key: item.id, className: `mtx-step${item.isChecked ? ' done' : ''}` },
+                  h('input', {
+                    type: 'checkbox',
+                    checked: item.isChecked === true,
+                    onChange: () => { void updateStep(item, { isChecked: item.isChecked !== true }) },
+                  }),
+                  h('span', { className: 'mtx-step-name' }, item.displayName),
+                  h('button', {
+                    type: 'button',
+                    className: 'mtx-iconbtn',
+                    title: t('promote'),
+                    onClick: () => { void promoteStep(item) },
+                  }, '↗'),
+                  h('button', {
+                    type: 'button',
+                    className: 'mtx-iconbtn',
+                    title: t('remove'),
+                    onClick: () => { void removeStep(item) },
+                  }, h(IconTrash))))),
+              h('div', { className: 'mtx-inline' },
+                h('input', {
+                  type: 'text',
+                  value: stepDraft,
+                  placeholder: t('stepPlaceholder'),
+                  style: { flex: 1 },
+                  onChange: (event) => setStepDraft(event.target.value),
+                  onKeyDown: (event) => { if (event.key === 'Enter') { event.preventDefault(); void addStep() } },
+                }),
+                h('button', { type: 'button', className: 'mtx-btn', onClick: () => { void addStep() } }, t('add')))),
+            h('div', { className: 'mtx-field' },
+              h('label', null, t('attachments')),
+              h('div', { className: 'mtx-files' },
+                files.length === 0
+                  ? h('div', { className: 'mtx-note-small' }, t('noAttachments'))
+                  : files.map(file => h('div', { key: file.id, className: 'mtx-file' },
+                      h('button', {
+                        type: 'button',
+                        className: 'mtx-link',
+                        onClick: () => { void downloadFile(file) },
+                        title: file.name,
+                      }, h('span', { className: 'mtx-file-name' }, file.name)),
+                      h('span', { className: 'mtx-file-size' }, formatSize(file.size)),
+                      h('button', {
+                        type: 'button',
+                        className: 'mtx-iconbtn',
+                        title: t('remove'),
+                        onClick: () => { void removeFile(file) },
+                      }, h(IconTrash))))),
+              h('input', {
+                ref: fileInput,
+                type: 'file',
+                style: { display: 'none' },
+                onChange: (event) => { void uploadFile(event) },
+              }),
+              h('button', {
+                type: 'button',
+                className: 'mtx-btn',
+                disabled: uploading,
+                onClick: () => { if (fileInput.current !== null) fileInput.current.click() },
+              }, uploading ? t('uploading') : t('attach')))),
+          h('div', { className: 'mtx-drawer-foot' },
+            h('button', {
+              type: 'button',
+              className: `mtx-btn${mydayOn ? ' primary' : ''}`,
+              onClick: onMyDay,
+              title: mydayOn ? t('removeMyDay') : t('addMyDay'),
+            }, t('myday')),
+            h('span', { className: 'spacer' }),
+            h('button', { type: 'button', className: 'mtx-btn', onClick: onDelete }, h(IconTrash)),
+            h('button', { type: 'button', className: 'mtx-btn', onClick: onComplete }, t('doneLabel')),
+            h('button', {
+              type: 'button',
+              className: 'mtx-btn primary',
+              disabled: saving,
+              onClick: () => { void save() },
+            }, saving ? t('saving') : t('save')))))
+    }
+
+    function TaskRow({ task, todayKey, t, busy, onComplete, onReopen, onStar, onDelete, onMyDay, onOpen, mydayOn = false, showList = false }) {
       const done = task.status === 'completed'
       const day = typeof task.dueDay === 'string' ? task.dueDay : null
       const label = dueLabel(day, todayKey)
       const late = label !== null && day !== null && day < todayKey
+      const noteText = String(task.body?.content ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
       return h('div', { className: `mtx-row${done ? ' done' : ''}` },
         h('button', {
           type: 'button',
@@ -670,14 +1156,14 @@ window.__ModuleLoader__.load({
           disabled: busy,
           onClick: done ? onReopen : onComplete,
         }, h(IconCheck)),
-        h('div', { className: 'mtx-row-main' },
+        h('div', { className: 'mtx-row-main', onClick: onOpen, title: t('detail') },
           h('div', { className: 'mtx-row-title' }, task.title),
-          (label !== null || task.importance === 'high' || (task.body?.content ?? '') !== '' || (showList && task.listName))
+          (label !== null || task.importance === 'high' || noteText !== '' || (showList && task.listName))
             ? h('div', { className: 'mtx-row-meta' },
                 showList && task.listName ? h('span', { className: 'mtx-chip' }, task.listName) : null,
                 label === null ? null : h('span', { className: `mtx-chip${late ? ' late' : ''}${day === todayKey ? ' today' : ''}` }, label),
                 task.importance === 'high' ? h('span', { className: 'mtx-chip today' }, '★ ' + t('starred')) : null,
-                (task.body?.content ?? '') === '' ? null : h('span', { className: 'mtx-chip' }, String(task.body.content).slice(0, 60)))
+                noteText === '' ? null : h('span', { className: 'mtx-chip' }, noteText.slice(0, 60)))
             : null),
         h('div', { className: 'mtx-row-actions' },
           h('button', {
@@ -697,7 +1183,7 @@ window.__ModuleLoader__.load({
           h('button', {
             type: 'button',
             className: 'mtx-iconbtn',
-            title: '删除',
+            title: t('deleteTask'),
             disabled: busy,
             onClick: onDelete,
           }, h(IconTrash))))

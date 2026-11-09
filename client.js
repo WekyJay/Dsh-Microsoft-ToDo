@@ -838,7 +838,7 @@ window.__ModuleLoader__.load({
                 ? h('div', { className: 'mtx-verline', title: compatTitle },
                     h('span', null, `${t('version')} ${meta.plugin?.version ?? ''}`),
                     h('span', { className: `mtx-verchip ${compatClass}` }, compatLabel))
-                : null))),
+                : null)),
           h('section', { className: 'mtx-main' },
             compatState === false
               ? h('div', { className: 'mtx-warn' }, t('compatWarn')
@@ -891,7 +891,7 @@ window.__ModuleLoader__.load({
                   ? [0, 1, 2].map(index => h('div', { key: index, className: 'mtx-skel' }))
                   : visible.length === 0
                     ? h('div', { className: 'mtx-empty' }, filter === 'open' ? t('emptyOpen') : t('empty'))
-                    : rows))
+                    : rows)))
         , toast === '' ? null : h('div', { className: 'mtx-toast' }, toast)
         , sheet === null ? null : h(GroupSheet, {
             t,

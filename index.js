@@ -66,9 +66,9 @@ const TODAY_TTL_MS = 30_000
  * panel shows the same range so a running install can explain a mismatch
  * without the user having to read package.json.
  */
-let manifestCache = null
 async function pluginManifest() {
-  if (manifestCache !== null) return manifestCache
+  // Re-read every call: the panel and the marketplace pin the version they
+  // see, and a running install may be one bundle behind the manifest on disk.
   let manifest = { name: 'dsh-microsoft-todo', version: '0.0.0', dshRange: '' }
   try {
     const raw = JSON.parse(await readFile(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf8'))
@@ -79,7 +79,6 @@ async function pluginManifest() {
       dshRange: typeof range === 'string' ? range : '',
     }
   } catch { /* a packaged bundle without package.json still renders the panel */ }
-  manifestCache = manifest
   return manifest
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "dsh-microsoft-todo",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "description": "Microsoft To Do panel for DeepSeek Harness: browse lists, manage tasks, group lists, and keep a My Day short list — all from one pane.",
   "license": "MIT",

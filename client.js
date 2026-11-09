@@ -51,8 +51,10 @@ window.__ModuleLoader__.load({
 .mtx-page :focus-visible{outline:none;box-shadow:0 0 0 2px var(--mtx-bg),0 0 0 4px var(--mtx-ring)}
 
 /* ---------- header ---------- */
-.mtx-head{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--mtx-border);flex:none}
-.mtx-brand{display:flex;align-items:center;gap:11px;min-width:0}
+.mtx-railhead{display:flex;align-items:center;gap:8px;padding:2px 4px 12px}
+.mtx-railhead .mtx-iconbtn{width:30px;height:30px;border:1px solid var(--mtx-border);border-radius:var(--mtx-r-sm);background:var(--mtx-bg)}
+.mtx-railhead .mtx-iconbtn:hover{background:color-mix(in srgb,var(--mtx-accent) 72%,var(--mtx-bg))}
+.mtx-brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
 .mtx-logo{
   width:34px;height:34px;border-radius:var(--mtx-r);flex:none;
   background:linear-gradient(180deg,#2E6FE0,#1D4FA6);color:#fff;
@@ -62,14 +64,14 @@ window.__ModuleLoader__.load({
 }
 .mtx-title{margin:0;font-size:15.5px;font-weight:600;letter-spacing:-.02em;line-height:1.3}
 .mtx-sub{margin:2px 0 0;font-size:11.5px;color:var(--mtx-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mtx-stats{display:flex;gap:8px;margin-left:auto}
+.mtx-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 2px 12px;margin-bottom:8px;border-bottom:1px solid var(--mtx-border)}
 .mtx-stat{
-  min-width:78px;padding:7px 12px;border-radius:var(--mtx-r);
+  min-width:0;padding:6px 9px;border-radius:var(--mtx-r-sm);
   border:1px solid var(--mtx-border);background:var(--mtx-surface);
   box-shadow:0 1px 1px rgba(15,23,42,.04);
 }
-.mtx-stat-label{font-size:10.5px;font-weight:500;color:var(--mtx-muted);letter-spacing:.02em}
-.mtx-stat-value{margin-top:1px;font-size:19px;font-weight:600;line-height:1.25;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.mtx-stat-label{font-size:10px;font-weight:500;color:var(--mtx-muted);letter-spacing:.02em}
+.mtx-stat-value{margin-top:1px;font-size:17px;font-weight:600;line-height:1.25;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .mtx-stat.today .mtx-stat-value{color:var(--mtx-primary)}
 .mtx-stat.overdue .mtx-stat-value{color:var(--mtx-destructive)}
 .mtx-stat.starred .mtx-stat-value{color:#B0790F}
@@ -91,7 +93,7 @@ window.__ModuleLoader__.load({
 /* ---------- shell ---------- */
 .mtx-body{flex:1;display:flex;min-height:0}
 .mtx-aside{
-  width:246px;flex:none;display:flex;flex-direction:column;min-height:0;
+  width:276px;flex:none;display:flex;flex-direction:column;min-height:0;
   overflow-y:auto;padding:14px 10px 12px;border-right:1px solid var(--mtx-border);
   background:color-mix(in srgb,var(--mtx-surface) 42%,var(--mtx-bg));
 }
@@ -189,7 +191,9 @@ window.__ModuleLoader__.load({
   font:inherit;font-size:12px;outline:none;
 }
 .mtx-date:focus{border-color:var(--mtx-primary);box-shadow:0 0 0 3px var(--mtx-ring)}
-.mtx-listhead{display:flex;align-items:baseline;gap:8px;padding:0 20px 8px;flex:none}
+.mtx-listhead{display:flex;align-items:center;gap:8px;padding:0 20px 8px;flex:none}
+.mtx-listhead .spacer{flex:1}
+.mtx-listhead .mtx-btn{height:28px;font-size:12px;padding:0 10px}
 .mtx-listhead-title{font-size:13.5px;font-weight:600;letter-spacing:-.015em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mtx-listhead-count{font-size:11.5px;color:var(--mtx-muted);font-variant-numeric:tabular-nums}
 .mtx-list{flex:1;min-height:0;overflow-y:auto;padding:0 12px 24px;display:flex;flex-direction:column;gap:1px}
@@ -314,19 +318,7 @@ window.__ModuleLoader__.load({
 .mtx-drawer-foot{display:flex;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--mtx-border);flex:none;background:var(--mtx-bg)}
 .mtx-drawer-foot .spacer{flex:1}
 
-/* ---------- group dialog ---------- */
-.mtx-modal{
-  position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
-  background:rgba(9,9,11,.46);backdrop-filter:blur(2px);animation:mtx-fade .16s ease-out;
-}
-.mtx-sheet{
-  display:flex;flex-direction:column;gap:12px;width:min(520px,100%);max-height:84vh;overflow:auto;
-  padding:20px;border-radius:12px;background:var(--mtx-bg);
-  border:1px solid var(--mtx-border);box-shadow:0 24px 64px rgba(15,23,42,.32);
-  animation:mtx-pop .18s cubic-bezier(.22,.61,.36,1);
-}
-@keyframes mtx-pop{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
-.mtx-sheet h3{margin:0;font-size:15px;font-weight:600;letter-spacing:-.02em}
+/* ---------- group drawer ---------- */
 .mtx-grow{display:flex;align-items:center;gap:8px}
 .mtx-grow .mtx-input{height:32px;font-size:12.5px}
 .mtx-assign{display:flex;flex-direction:column;gap:1px;margin-top:4px;padding-top:12px;border-top:1px solid var(--mtx-border)}
@@ -337,10 +329,7 @@ window.__ModuleLoader__.load({
   border:1px solid var(--mtx-border);background:var(--mtx-bg);color:var(--mtx-fg);
   font:inherit;font-size:11.5px;
 }
-.mtx-sheet-foot{display:flex;justify-content:flex-end;gap:8px;padding-top:12px;border-top:1px solid var(--mtx-border)}
 .mtx-note{margin:0;font-size:11.5px;line-height:1.6;color:var(--mtx-muted)}
-.mtx-head .mtx-iconbtn{width:32px;height:32px;border:1px solid var(--mtx-border);border-radius:var(--mtx-r-sm);background:var(--mtx-bg)}
-.mtx-head .mtx-iconbtn:hover{background:color-mix(in srgb,var(--mtx-accent) 72%,var(--mtx-bg))}
 .mtx-btn.danger{color:var(--mtx-destructive);border-color:color-mix(in srgb,var(--mtx-destructive) 26%,var(--mtx-border))}
 .mtx-btn.danger:hover{background:color-mix(in srgb,var(--mtx-destructive) 9%,var(--mtx-bg));border-color:color-mix(in srgb,var(--mtx-destructive) 40%,var(--mtx-border))}
 `
@@ -420,8 +409,12 @@ window.__ModuleLoader__.load({
       return h('svg', { width: 14, height: 14, viewBox: '0 0 24 24', 'aria-hidden': true, fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' }, h('path', { d: 'M12 5v14M5 12h14' }))
     }
 
+    function IconClose() {
+      return h('svg', { width: 14, height: 14, viewBox: '0 0 24 24', 'aria-hidden': true, fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' }, h('path', { d: 'M6 6l12 12M18 6L6 18' }))
+    }
+
     /**
-     * The board: lists on the left, the selected list's tasks on the right.
+     * The board: a left rail (brand, counters, lists) and the selected list's tasks on the right.
      * @param props - the panel registration's runtime share (unused).
      */
     function TodoPage() {
@@ -766,37 +759,29 @@ window.__ModuleLoader__.load({
         ? `DSH ${meta.dsh.version} < ${meta.dsh.required}`
         : compatState === null ? t('compatUnknownHint') : `DSH ${meta.dsh.version}`
 
+      const focusAdd = () => { const el = addRef.current; if (el !== null) { setPane('list'); el.focus() } }
+
       return h('div', { className: 'mtx-page', style: { position: 'relative' } },
-        h('header', { className: 'mtx-head' },
-          h('div', { className: 'mtx-brand' },
-            h('div', { className: 'mtx-logo' }, '✓'),
-            h('div', { style: { minWidth: 0 } },
-              h('h1', { className: 'mtx-title' }, t('title')),
-              h('p', { className: 'mtx-sub' }, auth?.account?.name
-                ? `${t('account')} · ${auth.account.name} · ${auth.account.username ?? ''}`
-                : t('account')))),
-          h('div', { className: 'mtx-stats' },
-            h(Stat, { label: t('today'), value: today?.dueToday?.length, tone: 'today' }),
-            h(Stat, { label: t('overdue'), value: today?.overdue?.length, tone: 'overdue' }),
-            h(Stat, { label: t('starred'), value: today?.starred?.length, tone: 'starred' })),
-          h('button', {
-            className: 'mtx-iconbtn',
-            onClick: () => { void refreshAll() },
-            disabled: busy,
-            title: t('refresh'),
-          }, h(IconRefresh)),
-          h('button', {
-            className: 'mtx-btn primary',
-            onClick: () => { const el = addRef.current; if (el !== null) { setPane('list'); el.focus() } },
-            title: t('add'),
-          }, h(IconPlus), t('add'))),
-        compatState === false
-          ? h('div', { className: 'mtx-warn' }, t('compatWarn')
-              .replace('{dsh}', meta.dsh.version ?? '?')
-              .replace('{required}', meta.dsh.required ?? ''))
-          : null,
         h('div', { className: 'mtx-body' },
           h('aside', { className: 'mtx-aside' },
+            h('div', { className: 'mtx-railhead' },
+              h('div', { className: 'mtx-brand' },
+                h('div', { className: 'mtx-logo' }, '✓'),
+                h('div', { style: { minWidth: 0 } },
+                  h('h1', { className: 'mtx-title' }, t('title')),
+                  h('p', { className: 'mtx-sub' }, auth?.account?.name
+                    ? `${t('account')} · ${auth.account.name}`
+                    : t('account')))),
+              h('button', {
+                className: 'mtx-iconbtn',
+                onClick: () => { void refreshAll() },
+                disabled: busy,
+                title: t('refresh'),
+              }, h(IconRefresh))),
+            h('div', { className: 'mtx-stats' },
+              h(Stat, { label: t('today'), value: today?.dueToday?.length, tone: 'today' }),
+              h(Stat, { label: t('overdue'), value: today?.overdue?.length, tone: 'overdue' }),
+              h(Stat, { label: t('starred'), value: today?.starred?.length, tone: 'starred' })),
             h('div', { className: 'mtx-aside-head' }, h('span', null, t('lists')), h('span', null, String(lists.length))),
             h('button', {
               className: `mtx-listrow myday${pane === 'myday' ? ' on' : ''}`,
@@ -855,11 +840,19 @@ window.__ModuleLoader__.load({
                     h('span', { className: `mtx-verchip ${compatClass}` }, compatLabel))
                 : null))),
           h('section', { className: 'mtx-main' },
+            compatState === false
+              ? h('div', { className: 'mtx-warn' }, t('compatWarn')
+                  .replace('{dsh}', meta.dsh.version ?? '?')
+                  .replace('{required}', meta.dsh.required ?? ''))
+              : null,
             pane === 'myday'
               ? null
               : h('div', { className: 'mtx-listhead' },
                   h('span', { className: 'mtx-listhead-title' }, heading),
-                  h('span', { className: 'mtx-listhead-count' }, `${headingCount} ${t('open')}`)),
+                  h('span', { className: 'mtx-listhead-count' }, `${headingCount} ${t('open')}`),
+                  h('span', { className: 'spacer' }),
+                  h('button', { className: 'mtx-btn primary', onClick: focusAdd, title: t('add') },
+                    h(IconPlus), t('add'))),
             pane === 'myday'
               ? h('div', { className: 'mtx-mydayhead' },
                   h('span', null, t('myday'), h('b', null, String(mydayItems.length))),
@@ -955,12 +948,21 @@ window.__ModuleLoader__.load({
       }))
       const groupOf = (listId) => groups.findIndex(group => (group.listIds ?? []).includes(listId))
 
+      useEffect(() => {
+        const onKey = (event) => { if (event.key === 'Escape') onClose() }
+        window.addEventListener('keydown', onKey)
+        return () => { window.removeEventListener('keydown', onKey) }
+      }, [onClose])
+
       return h('div', {
-        className: 'mtx-modal',
+        className: 'mtx-mask',
         onMouseDown: (event) => { if (event.target === event.currentTarget) onClose() },
       },
-        h('div', { className: 'mtx-sheet' },
-          h('h3', null, t('groupSettings')),
+        h('div', { className: 'mtx-drawer' },
+          h('div', { className: 'mtx-drawer-head' },
+            h('span', { className: 'mtx-drawer-title' }, t('groupSettings')),
+            h('button', { className: 'mtx-iconbtn', onClick: onClose, title: t('cancel') }, h(IconClose))),
+          h('div', { className: 'mtx-drawer-body' },
           h('p', { className: 'mtx-note' }, t('groupHint')),
           groups.map((group, index) => h('div', { className: 'mtx-grow', key: index },
             h('input', {
@@ -985,7 +987,9 @@ window.__ModuleLoader__.load({
                   h('option', { value: '' }, t('noGroup')),
                   groups.map((group, index) => h('option', { key: index, value: String(index) }, group.name.trim() === '' ? t('newGroup') : group.name))))
             })),
-          h('div', { className: 'mtx-sheet-foot' },
+          ),
+          h('div', { className: 'mtx-drawer-foot' },
+            h('span', { className: 'spacer' }),
             h('button', { className: 'mtx-btn', onClick: onClose }, t('cancel')),
             h('button', {
               className: 'mtx-btn primary',

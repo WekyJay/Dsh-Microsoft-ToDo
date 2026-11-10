@@ -156,9 +156,9 @@ window.__ModuleLoader__.load({
 .mtx-verchip.unknown{color:var(--mtx-muted);background:var(--mtx-surface);border-color:var(--mtx-border)}
 
 /* ---------- main ---------- */
-.mtx-main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0}
+.mtx-main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;padding-top:14px}
 .mtx-warn{
-  margin:12px 20px 0;padding:9px 12px;border-radius:var(--mtx-r-sm);
+  margin:0 20px 12px;padding:9px 12px;border-radius:var(--mtx-r-sm);
   font-size:12px;line-height:1.55;color:#8A1C13;
   background:rgba(180,35,24,.07);border:1px solid rgba(180,35,24,.22);
 }
@@ -191,9 +191,7 @@ window.__ModuleLoader__.load({
   font:inherit;font-size:12px;outline:none;
 }
 .mtx-date:focus{border-color:var(--mtx-primary);box-shadow:0 0 0 3px var(--mtx-ring)}
-.mtx-listhead{display:flex;align-items:center;gap:8px;padding:0 20px 8px;flex:none}
-.mtx-listhead .spacer{flex:1}
-.mtx-listhead .mtx-btn{height:28px;font-size:12px;padding:0 10px}
+.mtx-listhead{display:flex;align-items:center;gap:8px;min-height:28px;padding:0 20px 8px;flex:none}
 .mtx-listhead-title{font-size:13.5px;font-weight:600;letter-spacing:-.015em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mtx-listhead-count{font-size:11.5px;color:var(--mtx-muted);font-variant-numeric:tabular-nums}
 .mtx-list{flex:1;min-height:0;overflow-y:auto;padding:0 12px 24px;display:flex;flex-direction:column;gap:1px}
@@ -759,8 +757,6 @@ window.__ModuleLoader__.load({
         ? `DSH ${meta.dsh.version} < ${meta.dsh.required}`
         : compatState === null ? t('compatUnknownHint') : `DSH ${meta.dsh.version}`
 
-      const focusAdd = () => { const el = addRef.current; if (el !== null) { setPane('list'); el.focus() } }
-
       return h('div', { className: 'mtx-page', style: { position: 'relative' } },
         h('div', { className: 'mtx-body' },
           h('aside', { className: 'mtx-aside' },
@@ -849,10 +845,7 @@ window.__ModuleLoader__.load({
               ? null
               : h('div', { className: 'mtx-listhead' },
                   h('span', { className: 'mtx-listhead-title' }, heading),
-                  h('span', { className: 'mtx-listhead-count' }, `${headingCount} ${t('open')}`),
-                  h('span', { className: 'spacer' }),
-                  h('button', { className: 'mtx-btn primary', onClick: focusAdd, title: t('add') },
-                    h(IconPlus), t('add'))),
+                  h('span', { className: 'mtx-listhead-count' }, `${headingCount} ${t('open')}`)),
             pane === 'myday'
               ? h('div', { className: 'mtx-mydayhead' },
                   h('span', null, t('myday'), h('b', null, String(mydayItems.length))),

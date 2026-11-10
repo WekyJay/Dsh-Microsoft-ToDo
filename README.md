@@ -54,7 +54,7 @@ A Microsoft To Do panel for DeepSeek Harness: a left rail with the brand, today/
 
 | 项目 | 值 |
 | --- | --- |
-| 插件版本 | `0.6.0` |
+| 插件版本 | `0.6.2` |
 | 支持的 DSH | `>=0.2.0`（`package.json` 的 `engines.dsh`，DSH 在安装/启用时强制校验） |
 | 实测环境 | DSH `0.2.2-rc.1` · macOS（Apple Silicon）· Node 25 |
 

@@ -33,8 +33,35 @@ const GROUPS_FILE = fileURLToPath(new URL('./groups.json', import.meta.url))
  */
 const MYDAY_FILE = fileURLToPath(new URL('./myday.json', import.meta.url))
 
-/** The zone the user's day boundaries are read in. */
-const TZONE = 'Asia/Shanghai'
+/**
+ * The zone the user's day boundaries are read in.
+ *
+ * A constant `Asia/Shanghai` was wrong for everyone outside UTC+8: "Today",
+ * "Overdue", "My Day" and every due date this bridge writes sat a day off for
+ * them, by exactly the offset between the two zones. The device's own zone is
+ * the answer. `DSH_TODO_TZONE` (then `TZ`) overrides it for a machine whose
+ * zone the OS reports wrongly — containers and CI usually claim UTC — and
+ * `UTC` is the floor: `Intl` throws on an unknown zone at format time, which
+ * would fail every read instead of degrading one field.
+ */
+function resolveTimeZone() {
+  const candidates = [
+    process.env.DSH_TODO_TZONE,
+    process.env.TZ,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+  ]
+  for (const zone of candidates) {
+    if (typeof zone !== 'string' || zone.trim() === '') continue
+    try {
+      new Intl.DateTimeFormat('en-US', { timeZone: zone })
+      return zone.trim()
+    }
+    catch { /* not a zone this runtime knows: try the next candidate */ }
+  }
+  return 'UTC'
+}
+
+const TZONE = resolveTimeZone()
 
 /** Graph, reached directly for the few fields the MCP tool surface omits. */
 const GRAPH = 'https://graph.microsoft.com/v1.0'
@@ -47,6 +74,48 @@ const GRAPH = 'https://graph.microsoft.com/v1.0'
  * sign-in flow.
  */
 const TOKEN_CACHE = join(homedir(), '.config', 'microsoft-todo-mcp', 'token-cache.json')
+
+/**
+ * The upstream server, pinned to the version this bridge is written against.
+ *
+ * `npx -y microsoft-todo-mcp` asks npm for `latest` on every start, so two
+ * machines showing the same plugin version could be running different server
+ * code, and a bad upstream release would reach every install without this
+ * repository changing. Moving this pin is the deliberate act of re-testing.
+ */
+const MCP_PKG = 'microsoft-todo-mcp@0.2.0'
+
+/** npm's launcher carries a `.cmd` suffix on Windows and is not runnable without it. */
+const NPX = process.platform === 'win32' ? 'npx.cmd' : 'npx'
+
+/**
+ * The environment the upstream server is allowed to see.
+ *
+ * `env: process.env` handed a third-party child process every secret the host
+ * carried in its environment — API keys, tokens, whatever the operator had
+ * exported. The server needs none of that: it needs to find `node`, to reach
+ * its own cache under HOME, a temp directory, and the locale and proxy
+ * settings that decide whether its own network calls work.
+ */
+const CHILD_ENV_KEYS = [
+  'PATH', 'HOME', 'USERPROFILE', 'TMPDIR', 'TMP', 'TEMP',
+  'LANG', 'LC_ALL', 'LC_CTYPE', 'TZ',
+  'HTTP_PROXY', 'HTTPS_PROXY', 'NO_PROXY', 'http_proxy', 'https_proxy', 'no_proxy',
+  'NODE_EXTRA_CA_CERTS', 'SSL_CERT_FILE', 'SSL_CERT_DIR',
+  'npm_config_cache', 'npm_config_registry', 'npm_config_proxy', 'npm_config_https_proxy',
+  // Windows: without these, npm cannot resolve its own installation.
+  'SystemRoot', 'COMSPEC', 'PATHEXT', 'APPDATA', 'LOCALAPPDATA', 'PROGRAMDATA',
+]
+
+/** The child's environment, built from the allow-list above. */
+function childEnv() {
+  const env = {}
+  for (const key of CHILD_ENV_KEYS) {
+    const value = process.env[key]
+    if (typeof value === 'string' && value !== '') env[key] = value
+  }
+  return env
+}
 
 /** Upper bound on a request body, in bytes. */
 const BODY_LIMIT = 64 * 1024
@@ -268,9 +337,9 @@ class TodoBridge {
   /** Spawn the upstream server and send `initialize`. */
   start() {
     if (this.child !== null) return
-    const child = spawn('npx', ['-y', 'microsoft-todo-mcp'], {
+    const child = spawn(NPX, ['-y', MCP_PKG], {
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: process.env,
+      env: childEnv(),
     })
     this.child = child
     this.buffer = ''

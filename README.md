@@ -54,7 +54,7 @@ A Microsoft To Do panel for DeepSeek Harness: a left rail with the brand, today/
 
 | 项目 | 值 |
 | --- | --- |
-| 插件版本 | `0.6.2` |
+| 插件版本 | `0.6.3` |
 | 支持的 DSH | `>=0.2.0`（`package.json` 的 `engines.dsh`，DSH 在安装/启用时强制校验） |
 | 实测环境 | DSH `0.2.2-rc.1` · macOS（Apple Silicon）· Node 25 |
 
@@ -66,6 +66,12 @@ A Microsoft To Do panel for DeepSeek Harness: a left rail with the brand, today/
 
 `engines.dsh` 不满足时 DSH 会在安装或启用阶段直接拒绝该版本；确需强装可用
 `dsh plugin --profile <p> allow-version dsh-microsoft-todo@<版本> --dsh-version <运行版本> --accept-risk` 显式豁免（可能崩溃或丢数据）。
+
+## 前置要求 / Prerequisites
+
+- **Node.js 与 npm**：插件用 `npx` 拉起上游 MCP 服务，运行 DSH 的那台机器必须有可用的 Node.js 和 npm。
+- **能访问 npm registry**：首次启动（或 npm 缓存被清空后）需要下载上游服务，之后启动直接命中缓存。完全离线的机器上，面板会显示上游启动失败。
+- **时区**：日界线（今日 / 逾期 / 我的一天）与新写入的截止日期、提醒，都按**本机系统时区**计算（`Intl.DateTimeFormat().resolvedOptions().timeZone`）。容器或 CI 里系统时区常被报成 UTC，需要时用 `DSH_TODO_TZONE=Asia/Shanghai` 覆盖，`TZ` 也认。升级自 0.6.2 及更早版本的用户注意：那些版本把东八区写死，之前的日界线是按 UTC+8 判的。
 
 ## 首次使用 / First run
 
@@ -89,7 +95,7 @@ A Microsoft To Do panel for DeepSeek Harness: a left rail with the brand, today/
 
 ## 依赖 / Dependencies
 
-- 上游 MCP 服务 [`microsoft-todo-mcp`](https://www.npmjs.com/package/microsoft-todo-mcp)（`npx -y microsoft-todo-mcp`），由本插件的宿主半边常驻拉起，走 MCP stdio。
+- 上游 MCP 服务 [`microsoft-todo-mcp`](https://www.npmjs.com/package/microsoft-todo-mcp)（`npx -y microsoft-todo-mcp@0.2.0`，版本写死在 `index.js` 的 `MCP_PKG`），由本插件的宿主半边常驻拉起，走 MCP stdio。子进程只拿到一份白名单环境变量（`PATH` `HOME` 临时目录、locale 与代理），不会拿到宿主自己的密钥。
 - 该服务默认使用微软公共客户端 id（Microsoft Graph Command Line Tools），只需 `Tasks.ReadWrite` 委托权限，无需自建 Entra 应用。
 
 ## 卸载 / Uninstall

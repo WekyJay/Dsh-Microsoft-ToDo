@@ -65,11 +65,11 @@
       "versions": [
         {
           "version": "0.6.3",
-          "publishTimestamp": 1794312913,
+          "publishTimestamp": 1794359565,
           "source": {
             "type": "git",
             "url": "https://github.com/WekyJay/Dsh-Microsoft-ToDo",
-            "commit": "3616bbbb41c65d5f07aaf50b76c87f1c6afb1524"
+            "commit": "a12eef8d6c4a08e2b6428152088eb746e047943c"
           },
           "engines": {
             "dsh": ">=0.2.0"

@@ -156,7 +156,11 @@ window.__ModuleLoader__.load({
 .mtx-verchip.unknown{color:var(--mtx-muted);background:var(--mtx-surface);border-color:var(--mtx-border)}
 
 /* ---------- main ---------- */
-.mtx-main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;padding-top:14px}
+.mtx-page{--mtx-frame-top-clearance:calc(28px + var(--dsh-frame-top-clearance, 0px))}
+.mtx-main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0}
+.mtx-page > .mtx-state{padding-top:calc(32px + var(--mtx-frame-top-clearance))}
+.mtx-page > .mtx-body{padding-top:var(--mtx-frame-top-clearance);box-sizing:border-box}
+.mtx-page > .mtx-body > .mtx-aside{padding-top:0;background:transparent}
 .mtx-warn{
   margin:0 20px 12px;padding:9px 12px;border-radius:var(--mtx-r-sm);
   font-size:12px;line-height:1.55;color:#8A1C13;
